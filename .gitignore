@@ -1,0 +1,8 @@
+syntax: glob
+.crashlytics_data
+.DS_Store
+.settings
+ant.properties
+bin
+gen
+local.properties
