@@ -1,8 +1,11 @@
 syntax: glob
-.crashlytics_data
+.crashlytics_data/
 .DS_Store
+.gradle/
 .settings
-ant.properties
-bin
-gen
+.idea
+*.iml
+bin/
+build/
+gen/
 local.properties

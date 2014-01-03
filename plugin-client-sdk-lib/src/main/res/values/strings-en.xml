@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="http://schemas.android.com/apk/res/android">
+
+    <!-- A format string for breadcrumbs in the titlebar.  For left to right languages, such as English, the format will look something like "Main Activity > Sub Activity > Sub Activity 2".  Item #1 is the previous path, item #2 is the separator, and item #3 is the current item.  For most left to right languages, this shouldn't need to be changed. -->
+    <string name="com_twofortyfouram_locale_sdk_client_breadcrumb_format" tools:ignore="UnusedResources" formatted="true"><xliff:g id="activity_one" example="Locale">%1$s</xliff:g><xliff:g id="separator" example=">">%2$s</xliff:g><xliff:g id="activity_two" example="Toast">%3$s</xliff:g></string>
+
+    <!-- The separator character for breadcrumbs.  For most left to right languages, this shouldn't need to be changed. -->
+    <string name="com_twofortyfouram_locale_sdk_client_breadcrumb_separator" tools:ignore="UnusedResources">\u0020&gt;\u0020</string>
+
+    <!-- The Don't Save button in the menu or Action Bar.  MDPI 21 character maximum -->
+    <string name="com_twofortyfouram_locale_sdk_client_menu_cancel">Cancel</string>
+
+    <!-- The Save button in the menu or Action Bar.  MDPI 21 character maximum -->
+    <string name="com_twofortyfouram_locale_sdk_client_menu_done">Done</string>
+
+</resources>

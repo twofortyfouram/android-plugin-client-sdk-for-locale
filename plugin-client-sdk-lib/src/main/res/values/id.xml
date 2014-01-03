@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Menu item to cancel the current Activity. -->
+    <item name="com_twofortyfouram_locale_sdk_client_menu_cancel" type="id"/>
+
+    <!-- Menu item to save the current Activity. -->
+    <item name="com_twofortyfouram_locale_sdk_client_menu_done" type="id"/>
+</resources>

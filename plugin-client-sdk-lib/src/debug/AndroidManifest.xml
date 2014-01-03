@@ -1,0 +1,28 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.twofortyfouram.locale.sdk.client.debug"
+          android:installLocation="internalOnly">
+
+    <application
+            android:name=".DebugApplication">
+
+        <activity
+                android:name=".condition.ui.activity.PluginActivityImpl"
+                android:exported="false"/>
+
+        <activity
+                android:name=".condition.ui.activity.FragmentPluginActivityImpl"
+                android:exported="false"/>
+
+        <receiver
+                android:name=".condition.receiver.PluginConditionReceiver"
+                android:exported="true"
+                tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.QUERY_CONDITION"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

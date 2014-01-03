@@ -1,0 +1,98 @@
+/*
+ * android-plugin-client-sdk-for-locale https://github.com/twofortyfouram/android-plugin-client-sdk-for-locale
+ * Copyright 2014 two forty four a.m. LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.twofortyfouram.locale.sdk.client.ui.activity;
+
+import com.twofortyfouram.assertion.Assertions;
+import com.twofortyfouram.log.Lumberjack;
+import com.twofortyfouram.spackle.util.ResourceUtil;
+
+import net.jcip.annotations.NotThreadSafe;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+
+import java.util.Locale;
+
+/**
+ * If the user tries to launch the plug-in via the app store,
+ * this will redirect the user to a compatible host app on the device. If a
+ * compatible host does not exist, this directs the user to download the host
+ * from the app store.
+ */
+@NotThreadSafe
+public final class InfoActivity extends Activity {
+
+    /**
+     * Uri to deep link to the host in the app store.
+     */
+    @NonNull
+    private static final String DEFAULT_APP_STORE_URI
+            = "market://details?id=%s&referrer=utm_source=%s&utm_medium=app&utm_campaign=plugin";
+    //$NON-NLS-1$
+
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        final Intent i = getLaunchIntent(getApplicationContext(), getPackageManager(),
+                getPackageName());
+
+        try {
+            startActivity(i);
+        } catch (final Exception e) {
+            Lumberjack.e("Error starting Activity%s", e); //$NON-NLS-1$
+            /*
+             * Catch generic exception to handle all sorts of cases that could
+             * cause crashes: ActivityNotFoundException, SecurityException, and
+             * who knows what else.
+             */
+        }
+
+        finish();
+    }
+
+    @NonNull
+    /* package */ static Intent getLaunchIntent(@NonNull final Context context,
+            @NonNull final PackageManager manager,
+            @NonNull final String myPackageName) {
+        Assertions.assertNotNull(context, "context"); //$NON-NLS-1$
+        Assertions.assertNotNull(manager, "manager"); //$NON-NLS-1$
+        Assertions.assertNotNull(myPackageName, "myPackageName"); //$NON-NLS-1$
+
+        final String compatiblePackage
+                = com.twofortyfouram.locale.sdk.client.ui.util.HostPackageUtil
+                .getCompatiblePackage(manager, null);
+        if (null != compatiblePackage) {
+            final Intent i = manager.getLaunchIntentForPackage(compatiblePackage);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return i;
+        } else {
+            return new Intent(Intent.ACTION_VIEW, Uri.parse(String.format(Locale.US,
+                    ResourceUtil
+                            .getString(context,
+                                    com.twofortyfouram.locale.sdk.client.ui.util.UiResConstants.STRING_APP_STORE_DEEP_LINK,
+                                    DEFAULT_APP_STORE_URI),
+                    "com.twofortyfouram.locale", myPackageName
+            )))
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //$NON-NLS-1$
+        }
+    }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- List of condition states to be shown in the UI. -->
+    <string-array name="com_twofortyfouram_locale_sdk_client_debug_condition_states">
+        <item>@string/com_twofortyfouram_locale_sdk_client_debug_condition_satisfied</item>
+        <item>@string/com_twofortyfouram_locale_sdk_client_debug_condition_unsatisfied</item>
+        <item>@string/com_twofortyfouram_locale_sdk_client_debug_condition_unknown</item>
+    </string-array>
+
+</resources>

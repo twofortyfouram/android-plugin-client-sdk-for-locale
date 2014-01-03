@@ -1,0 +1,5 @@
+<resources>
+
+    <bool name="com_twofortyfouram_log_is_debug">true</bool>
+
+</resources>
