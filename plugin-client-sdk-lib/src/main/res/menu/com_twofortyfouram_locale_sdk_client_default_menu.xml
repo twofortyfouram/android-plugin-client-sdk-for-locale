@@ -7,7 +7,8 @@
             android:id="@id/com_twofortyfouram_locale_sdk_client_menu_cancel"
             android:icon="@drawable/com_twofortyfouram_locale_sdk_client_ic_menu_cancel"
             android:showAsAction="ifRoom|withText"
-            android:title="@string/com_twofortyfouram_locale_sdk_client_menu_cancel"/>
+            android:title="@string/com_twofortyfouram_locale_sdk_client_menu_cancel"
+            tools:ignore="UnusedAttribute"/>
 
     <!--
          Menu item to save the result. This should set the Activity result to RESULT_OK, with proper blurb and bundle extras,
@@ -17,6 +18,7 @@
             android:id="@id/com_twofortyfouram_locale_sdk_client_menu_done"
             android:icon="@drawable/com_twofortyfouram_locale_sdk_client_ic_menu_done"
             android:showAsAction="ifRoom|withText"
-            android:title="@string/com_twofortyfouram_locale_sdk_client_menu_done"/>
+            android:title="@string/com_twofortyfouram_locale_sdk_client_menu_done"
+            tools:ignore="UnusedAttribute"/>
 
 </menu>

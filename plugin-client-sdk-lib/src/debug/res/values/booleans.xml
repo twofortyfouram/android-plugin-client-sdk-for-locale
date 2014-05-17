@@ -1,5 +1,5 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <bool name="com_twofortyfouram_log_is_debug">true</bool>
+    <bool name="com_twofortyfouram_log_is_debug" translatable="false" tools:ignore="ResourceName">true</bool>
 
 </resources>
