@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'findbugs'
 
 dependencies {
     // support-v4 is optional for backwards compatibility
     // This should be 'provided' scope, however there is a bug with the Android Gradle
     // plugin so instead the dependency is filtered out from the POM
     // https://code.google.com/p/android/issues/detail?id=68316
-    compile group:'com.android.support', name:'support-v4', version:'[19,20['
+    compile group:'com.android.support', name:'support-v4', version:']19,)'
 
     compile group:'net.jcip', name:'jcip-annotations', version:'1.0'
     compile group:'com.android.support', name:'support-annotations', version:'+'
@@ -34,7 +35,7 @@ android {
 
     buildTypes {
         debug {
-            // testCoverageEnabled true
+            testCoverageEnabled Boolean.parseBoolean(IS_COVERAGE_ENABLED)
         }
         release {
             runProguard true
@@ -89,5 +90,20 @@ task installArchives(type: Upload) {
         configuration = configurations.default
         // Exclude support.v4, making it an optional dependency
         pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'support-v4' } }
+    }
+}
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+    classes = fileTree('build/intermediates/classes/release/')
+    source = fileTree('src/main/java/')
+    classpath = files()
+    excludeFilter = file("$rootProject.projectDir/tools/findbugs/android-filter.xml")
+    effort = 'max'
+    reportLevel = 'low'
+    reports {
+        // Only one report type can be enabled at a time, apparently.
+        xml.enabled = false
+        html.enabled = true
     }
 }
