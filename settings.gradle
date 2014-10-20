@@ -1,1 +1,1 @@
-include ':plugin-client-sdk-lib'
+include ':pluginClientSdkLib'
