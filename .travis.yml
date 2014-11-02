@@ -5,7 +5,7 @@ android:
   components:
     - platform-tools-21.0.0
     - tools-23.0.5
-    - build-tools-21.0.1
+    - build-tools-21.1.0
     
     - android-8
     - android-10
