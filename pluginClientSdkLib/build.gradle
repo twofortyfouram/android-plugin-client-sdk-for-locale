@@ -8,7 +8,7 @@ dependencies {
     // plugin so instead the dependency is filtered out from the POM
     // https://code.google.com/p/android/issues/detail?id=68316
     compile group:'com.android.support', name:'support-v4', version:']19,)'
-
+    compile group:'com.android.support', name:'appcompat-v7', version:'[21,)'
     compile group:'net.jcip', name:'jcip-annotations', version:'1.0'
     compile group:'com.android.support', name:'support-annotations', version:'+'
     compile group:'com.twofortyfouram', name:'android-annotation', version:'[1.0.2,3.0['
