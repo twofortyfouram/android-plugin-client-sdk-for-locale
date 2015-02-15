@@ -29,7 +29,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.twofortyfouram.assertion.Assertions;
 import com.twofortyfouram.assertion.BundleAssertions;
-import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.FragmentPluginActivityImpl;
+import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.AppCompatPluginActivityImpl;
 import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.PluginBundleValues;
 import com.twofortyfouram.spackle.util.bundle.BundleComparer;
 import com.twofortyfouram.test.ui.activity.ActivityTestUtil;
@@ -40,11 +40,11 @@ import net.jcip.annotations.ThreadSafe;
  * Superclass for Activity unit tests that provides facilities to make testing
  * easier.
  */
-public final class FragmentPluginActivityImplTest extends
-        ActivityInstrumentationTestCase2<FragmentPluginActivityImpl> {
+public final class AppCompatPluginActivityImplTest extends
+        ActivityInstrumentationTestCase2<AppCompatPluginActivityImpl> {
 
-    public FragmentPluginActivityImplTest() {
-        super(FragmentPluginActivityImpl.class);
+    public AppCompatPluginActivityImplTest() {
+        super(AppCompatPluginActivityImpl.class);
     }
 
     /**
@@ -180,7 +180,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testNewCondition_cancel_because_null_bundle() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(0);
         assertOnPostCreateWithPreviousBundleCount(0);
@@ -197,7 +197,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testNewSetting_cancel_because_null_bundle() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(0);
         assertOnPostCreateWithPreviousBundleCount(0);
@@ -214,7 +214,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testNewCondition_save() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(0);
         assertOnPostCreateWithPreviousBundleCount(0);
@@ -238,7 +238,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testNewSetting_save() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(0);
         assertOnPostCreateWithPreviousBundleCount(0);
@@ -262,7 +262,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldCondition_save_bundle_and_blurb_changed() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(1);
@@ -291,7 +291,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldCondition_save_bundle_changed() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(1);
@@ -320,7 +320,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldCondition_save_blurb_changed() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(1);
@@ -346,7 +346,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldSetting_save_bundle_and_blurb_changed() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(1);
@@ -375,7 +375,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldSetting_save_bundle_changed() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(1);
@@ -404,7 +404,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldSetting_save_blurb_changed() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(1);
@@ -430,7 +430,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldCondition_diffing_cancel() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(1);
@@ -454,7 +454,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldSetting_diffing_cancel() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(1);
@@ -478,7 +478,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldCondition_bad_bundle() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(0); // This is key for this test!
@@ -494,7 +494,7 @@ public final class FragmentPluginActivityImplTest extends
     @MediumTest
     @UiThreadTest
     public void testOldSetting_bad_bundle() {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
         assertOnPostCreateWithPreviousBundleCount(0); // This is key for this test!
@@ -524,7 +524,7 @@ public final class FragmentPluginActivityImplTest extends
 
     private void setActivityBundleAndBlurb(@Nullable final Bundle bundle,
                                            @Nullable final String blurb) {
-        FragmentPluginActivityImpl activity = getActivity();
+        AppCompatPluginActivityImpl activity = getActivity();
         activity.mBundle = bundle;
         activity.mBlurb = blurb;
     }
@@ -532,7 +532,7 @@ public final class FragmentPluginActivityImplTest extends
     /**
      * Asserts the Activity result is correct.
      * <p/>
-     * {@link android.app.Activity#finish()} must be called prior to calling this method.
+     * {@link Activity#finish()} must be called prior to calling this method.
      *
      * @param bundle The bundle to verify exists. Null indicates that no bundle
      *               should be present (not that a null bundle should be present).
@@ -565,42 +565,42 @@ public final class FragmentPluginActivityImplTest extends
 
     /**
      * @param expectedCount Expected number of calls to
-     *                      {@link com.twofortyfouram.locale.sdk.client.ui.activity.AbstractPluginActivity#getResultBlurb(android.os.Bundle)}}.
+     *                      {@link AppCompatPluginActivity#getResultBlurb(Bundle)}}.
      */
     private void assertGetBlurbCount(final int expectedCount) {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertEquals(expectedCount, activity.mGetBlurbCount.get());
     }
 
     /**
      * @param expectedCount Expected number of calls to
-     *                      {@link com.twofortyfouram.locale.sdk.client.ui.activity.AbstractPluginActivity#getResultBundle()}.
+     *                      {@link AppCompatPluginActivity#getResultBundle()}.
      */
     private void assertGetResultBundleCount(final int expectedCount) {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertEquals(expectedCount, activity.mGetResultBundleCount.get());
     }
 
     /**
      * @param expectedCount Expected number of calls to
-     *                      {@link com.twofortyfouram.locale.sdk.client.ui.activity.AbstractPluginActivity#isBundleValid(android.os.Bundle)}}
+     *                      {@link AppCompatPluginActivity#isBundleValid(Bundle)}}
      *                      .
      */
     private void assertIsBundleValidCount(final int expectedCount) {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertEquals(expectedCount, activity.mIsBundleValidCount.get());
     }
 
     /**
      * @param expectedCount Expected number of calls to
-     *                      {@link com.twofortyfouram.locale.sdk.client.ui.activity.AbstractPluginActivity#onPostCreateWithPreviousBundle(android.os.Bundle)}
+     *                      {@link AppCompatPluginActivity#onPostCreateWithPreviousBundle(Bundle)}
      *                      .
      */
     private void assertOnPostCreateWithPreviousBundleCount(final int expectedCount) {
-        final FragmentPluginActivityImpl activity = getActivity();
+        final AppCompatPluginActivityImpl activity = getActivity();
 
         assertEquals(expectedCount, activity.mOnPostCreateWithPreviousBundleCount.get());
     }

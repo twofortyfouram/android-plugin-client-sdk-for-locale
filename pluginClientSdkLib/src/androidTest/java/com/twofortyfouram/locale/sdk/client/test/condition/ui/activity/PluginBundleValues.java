@@ -20,12 +20,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.twofortyfouram.assertion.Assertions;
 import com.twofortyfouram.assertion.BundleAssertions;
 import com.twofortyfouram.log.Lumberjack;
 import com.twofortyfouram.spackle.util.AppBuildInfo;
 
 import net.jcip.annotations.ThreadSafe;
+
+import static com.twofortyfouram.assertion.Assertions.assertNotEmpty;
+import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
  * Class for managing the {@link com.twofortyfouram.locale.api.Intent#EXTRA_BUNDLE} for this
@@ -92,8 +94,8 @@ public final class PluginBundleValues {
     @NonNull
     public static Bundle generateBundle(@NonNull final Context context,
             @NonNull final String value) {
-        Assertions.assertNotNull(context, "context"); //$NON-NLS-1$
-        Assertions.assertNotEmpty(value, "value"); //$NON-NLS-1$
+        assertNotNull(context, "context"); //$NON-NLS-1$
+        assertNotEmpty(value, "value"); //$NON-NLS-1$
 
         final Bundle result = new Bundle();
         result.putInt(BUNDLE_EXTRA_INT_VERSION_CODE, AppBuildInfo.getVersionCode(context));

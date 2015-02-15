@@ -15,12 +15,6 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.activity;
 
-import com.twofortyfouram.locale.sdk.client.ui.util.BreadCrumber;
-import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.AndroidSdkVersion;
-
-import net.jcip.annotations.NotThreadSafe;
-
 import android.annotation.TargetApi;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -32,6 +26,13 @@ import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.twofortyfouram.locale.sdk.client.R;
+import com.twofortyfouram.locale.sdk.client.ui.util.BreadCrumber;
+import com.twofortyfouram.log.Lumberjack;
+import com.twofortyfouram.spackle.util.AndroidSdkVersion;
+
+import net.jcip.annotations.NotThreadSafe;
+
 /**
  * Extends {@link com.twofortyfouram.locale.sdk.client.ui.activity.AbstractPluginActivity} with UI
  * elements for a more consistent plug-in experience for users.  This Activity takes care of
@@ -39,6 +40,11 @@ import android.view.MenuItem;
  * breadcrumb, and configuring done and cancel
  * ActionBar buttons.
  */
+/*
+ * This class is deprecated, because the plug-in SDK is no longer going to worry about the look
+ * and feel of plug-ins in the future.  This is due to the constantly changing design of Android.
+ */
+@Deprecated
 @NotThreadSafe
 public abstract class AbstractLocalePluginActivity extends AbstractPluginActivity {
 
@@ -47,7 +53,9 @@ public abstract class AbstractLocalePluginActivity extends AbstractPluginActivit
         super.onCreate(savedInstanceState);
 
         if (isLocalePluginIntent(getIntent())) {
-            if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
+            if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.LOLLIPOP)) {
+                // Do nothing; let the Activity label apply
+            } else if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
                 setupTitleApi11OrLater();
             } else {
                 setTitle(BreadCrumber.generateBreadcrumb(getApplicationContext(), getIntent(),
@@ -61,20 +69,16 @@ public abstract class AbstractLocalePluginActivity extends AbstractPluginActivit
         super.onCreateOptionsMenu(menu);
 
         if (isLocalePluginIntent(getIntent())) {
-            final int menuResId = getResources().getIdentifier(
-                    com.twofortyfouram.locale.sdk.client.ui.util.UiResConstants.MENU_DEFAULT, "menu",
-                    getPackageName()); //$NON-NLS-1$
+            getMenuInflater().inflate(R.menu.com_twofortyfouram_locale_sdk_client_default_menu, menu);
 
-            if (0 != menuResId) {
-                getMenuInflater().inflate(menuResId, menu);
+            if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
+                setupActionBarApi11OrLater();
+            }
 
-                if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
-                    setupActionBarApi11OrLater();
-                }
-
-                if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
-                    setupActionBarApi14OrLater();
-                }
+            if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.LOLLIPOP)) {
+                // Do nothing; let default action bar apply
+            } else if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
+                setupActionBarApi14OrLater();
             }
         }
 
@@ -85,13 +89,6 @@ public abstract class AbstractLocalePluginActivity extends AbstractPluginActivit
     public final boolean onMenuItemSelected(final int featureId, final MenuItem item) {
         if (isLocalePluginIntent(getIntent())) {
             final int id = item.getItemId();
-
-            final int cancelResId = getResources().getIdentifier(
-                    com.twofortyfouram.locale.sdk.client.ui.util.UiResConstants.ID_MENU_CANCEL, "id",
-                    getPackageName()); //$NON-NLS-1$
-            final int saveResId = getResources().getIdentifier(
-                    com.twofortyfouram.locale.sdk.client.ui.util.UiResConstants.ID_MENU_DONE, "id",
-                    getPackageName()); //$NON-NLS-1$
 
             if (android.R.id.home == id) {
                 /*
@@ -104,11 +101,11 @@ public abstract class AbstractLocalePluginActivity extends AbstractPluginActivit
                  */
                 finish();
                 return true;
-            } else if (cancelResId == id) {
+            } else if (R.id.com_twofortyfouram_locale_sdk_client_menu_cancel == id) {
                 mIsCancelled = true;
                 finish();
                 return true;
-            } else if (saveResId == id) {
+            } else if (R.id.com_twofortyfouram_locale_sdk_client_menu_done == id) {
                 finish();
                 return true;
             }

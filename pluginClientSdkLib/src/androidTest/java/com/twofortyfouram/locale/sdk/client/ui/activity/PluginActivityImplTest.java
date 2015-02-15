@@ -34,8 +34,6 @@ import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.PluginBun
 import com.twofortyfouram.spackle.util.bundle.BundleComparer;
 import com.twofortyfouram.test.ui.activity.ActivityTestUtil;
 
-import net.jcip.annotations.ThreadSafe;
-
 /**
  * Superclass for Activity unit tests that provides facilities to make testing
  * easier.
@@ -543,10 +541,10 @@ public final class PluginActivityImplTest extends
                                       @Nullable final String blurb) {
         final Activity activity = getActivity();
 
-        assertEquals(resultCode, ActivityTestUtil.getActivityResultCode(activity));
+        assertEquals(resultCode, ActivityTestUtil.getActivityResultCodeSync(getInstrumentation(), activity));
 
         if (Activity.RESULT_OK == resultCode) {
-            final Intent result = ActivityTestUtil.getActivityResultData(activity);
+            final Intent result = ActivityTestUtil.getActivityResultDataSync(getInstrumentation(), activity);
             assertNotNull(result);
 
             final Bundle extras = result.getExtras();
@@ -559,7 +557,7 @@ public final class PluginActivityImplTest extends
                     .getBundle(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
             assertTrue(BundleComparer.areBundlesEqual(bundle, pluginBundle));
         } else if (Activity.RESULT_CANCELED == resultCode) {
-            assertNull(ActivityTestUtil.getActivityResultData(activity));
+            assertNull(ActivityTestUtil.getActivityResultDataSync(getInstrumentation(), activity));
         }
     }
 
@@ -640,61 +638,4 @@ public final class PluginActivityImplTest extends
         assertFalse(AbstractPluginActivity.isLocalePluginIntent(new Intent()));
     }
 
-    /**
-     * Enumerates the types of plug-ins for Locale.
-     */
-    @ThreadSafe
-    public enum PluginType {
-
-        /**
-         * A plug-in condition.
-         *
-         * @see com.twofortyfouram.locale.api.Intent#ACTION_EDIT_CONDITION
-         * @see com.twofortyfouram.locale.api.Intent#ACTION_QUERY_CONDITION
-         */
-        @NonNull
-        CONDITION(com.twofortyfouram.locale.api.Intent.ACTION_EDIT_CONDITION,
-                com.twofortyfouram.locale.api.Intent.ACTION_QUERY_CONDITION),
-
-        /**
-         * A plug-in setting.
-         *
-         * @see com.twofortyfouram.locale.api.Intent#ACTION_EDIT_SETTING
-         * @see com.twofortyfouram.locale.api.Intent#ACTION_FIRE_SETTING
-         */
-        @NonNull
-        SETTING(com.twofortyfouram.locale.api.Intent.ACTION_EDIT_SETTING,
-                com.twofortyfouram.locale.api.Intent.ACTION_FIRE_SETTING);
-
-        @NonNull
-        private final String mActivityIntentAction;
-
-        @NonNull
-        private final String mReceiverIntentAction;
-
-        private PluginType(@NonNull final String activityIntentAction,
-                           @NonNull final String receiverIntentAction) {
-            Assertions.assertNotEmpty(activityIntentAction, "activityIntentAction"); //$NON-NLS-1$
-            Assertions.assertNotEmpty(receiverIntentAction, "receiverIntentAction"); //$NON-NLS-1$
-
-            mActivityIntentAction = activityIntentAction;
-            mReceiverIntentAction = receiverIntentAction;
-        }
-
-        /**
-         * @return The Activity Intent action for the plug-in type.
-         */
-        @NonNull
-        public String getActivityIntentAction() {
-            return mActivityIntentAction;
-        }
-
-        /**
-         * @return The BroadcastReceiver Intent action for the plug-in type.
-         */
-        @NonNull
-        public String getReceiverIntentAction() {
-            return mReceiverIntentAction;
-        }
-    }
 }

@@ -22,9 +22,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.twofortyfouram.locale.sdk.client.R;
 import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.ResourceUtil;
 
 import net.jcip.annotations.NotThreadSafe;
 
@@ -41,16 +42,8 @@ import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 @NotThreadSafe
 public final class InfoActivity extends Activity {
 
-    /**
-     * Uri to deep link to the host in the app store.
-     */
-    @NonNull
-    private static final String DEFAULT_APP_STORE_URI
-            = "market://details?id=%s&referrer=utm_source=%s&utm_medium=app&utm_campaign=plugin";
-    //$NON-NLS-1$
-
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Intent i = getLaunchIntent(getApplicationContext(), getPackageManager(),
@@ -72,8 +65,8 @@ public final class InfoActivity extends Activity {
 
     @NonNull
     /* package */ static Intent getLaunchIntent(@NonNull final Context context,
-            @NonNull final PackageManager manager,
-            @NonNull final String myPackageName) {
+                                                @NonNull final PackageManager manager,
+                                                @NonNull final String myPackageName) {
         assertNotNull(context, "context"); //$NON-NLS-1$
         assertNotNull(manager, "manager"); //$NON-NLS-1$
         assertNotNull(myPackageName, "myPackageName"); //$NON-NLS-1$
@@ -86,14 +79,9 @@ public final class InfoActivity extends Activity {
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             return i;
         } else {
-            return new Intent(Intent.ACTION_VIEW, Uri.parse(String.format(Locale.US,
-                    ResourceUtil
-                            .getString(context,
-                                    com.twofortyfouram.locale.sdk.client.ui.util.UiResConstants.STRING_APP_STORE_DEEP_LINK,
-                                    DEFAULT_APP_STORE_URI),
+            return new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.com_twofortyfouram_locale_sdk_client_app_store_deep_link_format,
                     "com.twofortyfouram.locale", myPackageName
-            )))
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //$NON-NLS-1$
+            ))).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //$NON-NLS-1$
         }
     }
 }

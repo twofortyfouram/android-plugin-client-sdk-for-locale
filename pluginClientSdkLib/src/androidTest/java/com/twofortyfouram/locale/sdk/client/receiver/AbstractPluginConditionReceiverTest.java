@@ -15,6 +15,7 @@
 
 package com.twofortyfouram.locale.sdk.client.receiver;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -137,6 +138,7 @@ public final class AbstractPluginConditionReceiverTest extends AndroidTestCase {
     }
 
     @NonNull
+    @SuppressLint("InlinedApi")
     private Intent getDefaultIntent(final int state) {
         final Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES | Intent.FLAG_FROM_BACKGROUND);

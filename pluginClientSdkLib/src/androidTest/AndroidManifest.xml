@@ -13,6 +13,11 @@
             android:name=".test.condition.ui.activity.FragmentPluginActivityImpl"
             android:exported="false" />
 
+        <activity
+            android:name=".test.condition.ui.activity.AppCompatPluginActivityImpl"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat" />
+
         <receiver
             android:name=".test.condition.receiver.PluginConditionReceiver"
             android:exported="true"

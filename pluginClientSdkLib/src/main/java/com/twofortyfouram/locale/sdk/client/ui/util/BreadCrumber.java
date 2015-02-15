@@ -15,17 +15,16 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.util;
 
-import com.twofortyfouram.assertion.Assertions;
-import com.twofortyfouram.spackle.util.ResourceUtil;
-
-import net.jcip.annotations.ThreadSafe;
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.Locale;
+import com.twofortyfouram.locale.sdk.client.R;
+
+import net.jcip.annotations.ThreadSafe;
+
+import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
  * Utility class to generate a breadcrumb title string for {@code Activity}
@@ -48,22 +47,16 @@ public final class BreadCrumber {
      */
     @NonNull
     public static CharSequence generateBreadcrumb(@NonNull final Context context,
-            @Nullable final Intent intent, @NonNull final String currentCrumb) {
-        Assertions.assertNotNull(context, "context"); //$NON-NLS-1$
-        Assertions.assertNotNull(currentCrumb, "currentCrumb"); //$NON-NLS-1$
+                                                  @Nullable final Intent intent, @NonNull final String currentCrumb) {
+        assertNotNull(context, "context"); //$NON-NLS-1$
+        assertNotNull(currentCrumb, "currentCrumb"); //$NON-NLS-1$
 
         String result = currentCrumb;
         if (null != intent) {
             final String breadcrumbString = intent
                     .getStringExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BREADCRUMB);
             if (null != breadcrumbString) {
-                final String format = ResourceUtil.getString(context,
-                        UiResConstants.STRING_BREADCRUMB_FORMAT, "%1$s%2$s%3$s");
-                final String separator = ResourceUtil.getString(context,
-                        UiResConstants.STRING_BREADCRUMB_SEPARATOR, //$NON-NLS-1$
-                        " > ");
-                result = String.format(Locale.getDefault(), format, breadcrumbString, separator,
-                        currentCrumb);
+                result = context.getString(R.string.com_twofortyfouram_locale_sdk_client_breadcrumb_format, breadcrumbString, context.getString(R.string.com_twofortyfouram_locale_sdk_client_breadcrumb_separator), currentCrumb);
             }
         }
         return result;

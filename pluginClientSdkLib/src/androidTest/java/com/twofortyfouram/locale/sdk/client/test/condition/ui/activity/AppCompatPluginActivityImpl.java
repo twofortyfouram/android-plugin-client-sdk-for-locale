@@ -19,7 +19,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.twofortyfouram.locale.sdk.client.ui.activity.AbstractFragmentPluginActivity;
+import com.twofortyfouram.locale.sdk.client.ui.activity.AbstractAppCompatPluginActivity;
 import com.twofortyfouram.spackle.util.bundle.BundleComparer;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,9 +27,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
- * A concrete implementation of {@link com.twofortyfouram.locale.sdk.client.ui.activity.AbstractFragmentPluginActivity} in order to test the abstract class.
+ * A concrete implementation of {@link AbstractAppCompatPluginActivity} in order to test the abstract class.
  */
-public final class FragmentPluginActivityImpl extends AbstractFragmentPluginActivity {
+public final class AppCompatPluginActivityImpl extends AbstractAppCompatPluginActivity {
 
     @NonNull
     public final AtomicInteger mIsBundleValidCount = new AtomicInteger(0);

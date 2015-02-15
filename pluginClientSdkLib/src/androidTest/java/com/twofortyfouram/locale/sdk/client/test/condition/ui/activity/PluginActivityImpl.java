@@ -19,11 +19,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.twofortyfouram.assertion.Assertions;
 import com.twofortyfouram.locale.sdk.client.ui.activity.AbstractPluginActivity;
 import com.twofortyfouram.spackle.util.bundle.BundleComparer;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
  * A concrete implementation of {@link com.twofortyfouram.locale.sdk.client.ui.activity.AbstractPluginActivity} in order to test the abstract class.
@@ -56,10 +57,10 @@ public final class PluginActivityImpl extends AbstractPluginActivity {
 
     @Override
     public void onPostCreateWithPreviousResult(@NonNull final Bundle previousBundle,
-            @NonNull final String previousBlurb) {
+                                               @NonNull final String previousBlurb) {
         mOnPostCreateWithPreviousBundleCount.incrementAndGet();
 
-        Assertions.assertNotNull(previousBundle, "previousBundle"); //$NON-NLS-1$
+        assertNotNull(previousBundle, "previousBundle"); //$NON-NLS-1$
     }
 
     @Override
@@ -73,7 +74,7 @@ public final class PluginActivityImpl extends AbstractPluginActivity {
     public String getResultBlurb(@NonNull final Bundle bundle) {
         mGetBlurbCount.incrementAndGet();
 
-        Assertions.assertNotNull(bundle, "bundle"); //$NON-NLS-1$
+        assertNotNull(bundle, "bundle"); //$NON-NLS-1$
 
         if (!BundleComparer.areBundlesEqual(bundle, mBundle)) {
             throw new AssertionError();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-** Copyright 2013 two forty four a.m. LLC <http://www.twofortyfouram.com>
+** Copyright 2013-2015 two forty four a.m. LLC <http://www.twofortyfouram.com>
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
     <string name="com_twofortyfouram_locale_sdk_client_breadcrumb_format" formatted="true"><xliff:g id="activity_one" example="Locale">%1$s</xliff:g><xliff:g id="separator" example=">">%2$s</xliff:g><xliff:g id="activity_two" example="Toast">%3$s</xliff:g></string>
     <string name="com_twofortyfouram_locale_sdk_client_breadcrumb_separator">\u0020&gt;\u0020</string>
     <string name="com_twofortyfouram_locale_sdk_client_menu_cancel">Avbryt</string>
+    <string name="com_twofortyfouram_locale_sdk_client_menu_discard">Ignorera ändringar</string>
     <string name="com_twofortyfouram_locale_sdk_client_menu_done">Klar</string>
 
 </resources>
