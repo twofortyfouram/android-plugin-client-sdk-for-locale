@@ -36,7 +36,7 @@ import android.support.v4.app.FragmentActivity;
  * class, support-v4 must be on the application's build path.  Typically, this would involve adding
  * support-v4 to the dependencies section of the application's build.gradle script.  For example,
  * the dependency might look something like this
- * {@code compile group:'com.android.support', name:'support-v4', version:'[19,)'}</p>
+ * {@code compile group:'com.android.support', name:'support-v4', version:'[21,)'}</p>
  * <p>
  * Implements the basic behaviors of a "Edit" activity for a
  * plug-in, handling the Intent protocol for storing and retrieving the plug-in's data.
