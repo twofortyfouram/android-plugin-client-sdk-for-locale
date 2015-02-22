@@ -23,9 +23,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.twofortyfouram.locale.sdk.client.R;
 import com.twofortyfouram.locale.sdk.client.ui.util.BreadCrumber;
 import com.twofortyfouram.log.Lumberjack;
 import com.twofortyfouram.spackle.util.AndroidSdkVersion;
@@ -50,7 +52,7 @@ public abstract class AbstractLocalePluginActionBarActivity extends AbstractPlug
             if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
                 setupTitleApi11OrLater();
             } else {
-                setTitle(BreadCrumber.generateBreadcrumb(getApplicationContext(), getIntent(),
+                getSupportActionBar().setTitle(BreadCrumber.generateBreadcrumb(getApplicationContext(), getIntent(),
                         getActivityLabel()));
             }
         }
@@ -68,13 +70,7 @@ public abstract class AbstractLocalePluginActionBarActivity extends AbstractPlug
             if (0 != menuResId) {
                 getMenuInflater().inflate(menuResId, menu);
 
-                if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
-                    setupActionBarApi11OrLater();
-                }
-
-                if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
-                    setupActionBarApi14OrLater();
-                }
+                setupActionBar();
             }
         }
 
@@ -143,20 +139,12 @@ public abstract class AbstractLocalePluginActionBarActivity extends AbstractPlug
             Lumberjack.e("Calling package couldn't be found%s", e); //$NON-NLS-1$
         }
         if (null != callingApplicationLabel) {
-            setTitle(callingApplicationLabel);
+            getSupportActionBar().setTitle(callingApplicationLabel);
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void setupActionBarApi11OrLater() {
-        getActionBar().setSubtitle(
-                BreadCrumber.generateBreadcrumb(getApplicationContext(), getIntent(),
-                        getActivityLabel()));
-    }
-
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    private void setupActionBarApi14OrLater() {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+    private void setupActionBar() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /*
          * Note: There is a small TOCTOU error here, in that the host could be
@@ -167,7 +155,7 @@ public abstract class AbstractLocalePluginActionBarActivity extends AbstractPlug
          * very slim.
          */
         try {
-            getActionBar().setIcon(getPackageManager().getApplicationIcon(getCallingPackage()));
+            getSupportActionBar().setIcon(getPackageManager().getApplicationIcon(getCallingPackage()));
         } catch (final NameNotFoundException e) {
             Lumberjack.w("An error occurred loading the host's icon%s", e); //$NON-NLS-1$
         }

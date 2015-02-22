@@ -7,7 +7,7 @@ dependencies {
     // This should be 'provided' scope, however there is a bug with the Android Gradle
     // plugin so instead the dependency is filtered out from the POM
     // https://code.google.com/p/android/issues/detail?id=68316
-    compile group:'com.android.support', name:'support-v4', version:']19,)'
+    compile group:'com.android.support', name:'support-v4', version:'[21,)'
     compile group:'com.android.support', name:'appcompat-v7', version:'[21,)'
     compile group:'net.jcip', name:'jcip-annotations', version:'1.0'
     compile group:'com.android.support', name:'support-annotations', version:'+'
@@ -78,6 +78,8 @@ uploadArchives {
             }
             // Exclude support.v4, making it an optional dependency
             pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'support-v4' } }
+            // Exclude appcompat-v7, making it an optional dependency
+            pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'appcompat-v7' } }
         }
     }
 }
@@ -90,6 +92,8 @@ task installArchives(type: Upload) {
         configuration = configurations.default
         // Exclude support.v4, making it an optional dependency
         pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'support-v4' } }
+        // Exclude appCompat.v7, making it an optional dependency
+        pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'appcompat-v7' } }
     }
 }
 
