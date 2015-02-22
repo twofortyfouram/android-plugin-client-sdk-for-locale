@@ -23,11 +23,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.twofortyfouram.locale.sdk.client.R;
 import com.twofortyfouram.locale.sdk.client.ui.util.BreadCrumber;
 import com.twofortyfouram.log.Lumberjack;
 import com.twofortyfouram.spackle.util.AndroidSdkVersion;
@@ -42,7 +40,7 @@ import net.jcip.annotations.NotThreadSafe;
  * ActionBar buttons.
  */
 @NotThreadSafe
-public abstract class AbstractLocalePluginActionBarActivity extends AbstractPluginActionBarActivity {
+public abstract class AbstractLocaleActionBarPluginActivity extends AbstractActionBarPluginActivity {
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {

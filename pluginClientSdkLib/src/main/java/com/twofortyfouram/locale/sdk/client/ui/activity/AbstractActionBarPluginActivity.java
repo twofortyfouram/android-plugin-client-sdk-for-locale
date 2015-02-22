@@ -77,7 +77,7 @@ import net.jcip.annotations.NotThreadSafe;
  * @see com.twofortyfouram.locale.api.Intent#ACTION_EDIT_SETTING ACTION_EDIT_SETTING
  */
 @NotThreadSafe
-public abstract class AbstractPluginActionBarActivity extends ActionBarActivity {
+public abstract class AbstractActionBarPluginActivity extends ActionBarActivity {
 
     /**
      * Flag boolean that can be set prior to calling {@link #finish()} to control whether the
