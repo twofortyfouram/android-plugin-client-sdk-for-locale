@@ -18,7 +18,6 @@ dependencies {
 
     androidTestCompile group:'com.twofortyfouram', name:'android-test', version:'[1.0.4,2.0['
     testCompile fileTree(dir: "$rootProject.projectDir/build/intermediates/exploded-aar/com.android.support/support-v4/", include: "**/*.jar")
-    testCompile fileTree(dir: "$rootProject.projectDir/build/intermediates/exploded-aar/com.android.support/appcompat-v7/", include: "**/*.jar")
 }
 
 android {
@@ -78,10 +77,8 @@ uploadArchives {
                     }
                 }
             }
-            // Exclude support.v4, making it an optional dependency
-            pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'support-v4' } }
-            // Exclude appcompat-v7, making it an optional dependency
-            pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'appcompat-v7' } }
+            // Exclude support.v4 & appcompat-v7, making them optional dependencies
+            pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && (dep.artifactId == 'support-v4' || dep.artifactId == 'appcompat-v7') } }
         }
     }
 }
@@ -92,10 +89,8 @@ task installArchives(type: Upload) {
     description "Installs artifacts to mavenLocal."
     repositories.mavenInstaller {
         configuration = configurations.default
-        // Exclude support.v4, making it an optional dependency
-        pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'support-v4' } }
-        // Exclude appCompat.v7, making it an optional dependency
-        pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'appcompat-v7' } }
+        // Exclude support.v4 & appcompat-v7, making them optional dependencies
+        pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && (dep.artifactId == 'support-v4' || dep.artifactId == 'appcompat-v7') } }
     }
 }
 
