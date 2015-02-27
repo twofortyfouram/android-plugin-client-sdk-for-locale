@@ -58,6 +58,14 @@ android.libraryVariants.all { variant ->
     }
 }
 
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
 group = MAVEN_GROUP
 archivesBaseName = MAVEN_ARTIFACT_NAME
 version = ANDROID_VERSION_NAME
