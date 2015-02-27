@@ -7,8 +7,8 @@ android:
     - platform-tools-21.0.0
     - tools-24.0.2
     - build-tools-21.1.2
-    - extra-android-m2repository
     - extra-android-support
+    - extra-android-m2repository
     - android-8
     - android-10
     - android-19
