@@ -50,9 +50,9 @@ android.libraryVariants.all { variant ->
         description "Generates Javadoc for $variant.name."
         def androidHome = System.getenv('ANDROID_HOME')
         source = variant.javaCompile.source
-        classpath = files(variant.javaCompile.classpath.files) + files("${androidHome}/platforms/${android.compileSdkVersion}/android.jar")
+        classpath = files(variant.javaCompile.classpath.files) + files("${androidHome}/platforms/${android.compileSdkVersion}/android.jar" + files("${androidHome}/extras/android/support/v4/android-support-v4.jar"))
         options.linksOffline('http://developer.android.com/reference/', "${androidHome}/docs/reference")
-        options.links('http://jcip.net.s3-website-us-east-1.amazonaws.com/annotations/doc/', 'http://twofortyfouram.github.io/android-annotation/', 'http://twofortyfouram.github.io/android-plugin-api-for-locale/', 'http://docs.oracle.com/javase/7/docs/api/', 'http://d.android.com/reference/')
+        options.links('http://jcip.net.s3-website-us-east-1.amazonaws.com/annotations/doc/', 'http://twofortyfouram.github.io/android-annotation/', 'http://twofortyfouram.github.io/android-plugin-api-for-locale/')
         exclude '**/HostPackageUtil.java'
         exclude '**/UiResConstants.java'
     }
