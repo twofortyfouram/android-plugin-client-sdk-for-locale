@@ -62,7 +62,6 @@ import android.util.Pair;
                 new Pair<PendingResult, AsyncCallback>(pendingResult, callback)));
     }
 
-    @SuppressWarnings("unchecked")
     @TargetApi(VERSION_CODES.HONEYCOMB)
     private static final class AsyncHandlerCallback implements Handler.Callback {
 

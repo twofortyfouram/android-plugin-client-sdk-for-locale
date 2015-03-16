@@ -17,7 +17,6 @@ dependencies {
     compile group:'com.twofortyfouram', name:'android-spackle', version:'[1.0.4,2.0['
 
     androidTestCompile group:'com.twofortyfouram', name:'android-test', version:'[1.0.4,2.0['
-    testCompile fileTree(dir: "$rootProject.projectDir/build/intermediates/exploded-aar/com.android.support/support-v4/", include: "**/*.jar")
 }
 
 android {
@@ -55,14 +54,6 @@ android.libraryVariants.all { variant ->
         options.links('http://jcip.net.s3-website-us-east-1.amazonaws.com/annotations/doc/', 'http://twofortyfouram.github.io/android-annotation/', 'http://twofortyfouram.github.io/android-plugin-api-for-locale/')
         exclude '**/HostPackageUtil.java'
         exclude '**/UiResConstants.java'
-    }
-}
-
-if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-        tasks.withType(Javadoc) {
-            options.addStringOption('Xdoclint:none', '-quiet')
-        }
     }
 }
 
