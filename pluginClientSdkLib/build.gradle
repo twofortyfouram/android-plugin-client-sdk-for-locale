@@ -57,7 +57,7 @@ android.libraryVariants.all { variant ->
     }
 }
 
-// Java8 fails the build because of Javadoc formatting. Prevent this (for Travis CI)
+// Java8 fails the build because of an error with Javadoc involving formatting. Prevent this (for Travis CI)
 if (JavaVersion.current().isJava8Compatible()) {
     allprojects {
         tasks.withType(Javadoc) {
