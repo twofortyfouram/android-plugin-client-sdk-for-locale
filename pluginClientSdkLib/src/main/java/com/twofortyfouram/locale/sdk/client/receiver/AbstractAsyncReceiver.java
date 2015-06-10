@@ -15,12 +15,6 @@
 
 package com.twofortyfouram.locale.sdk.client.receiver;
 
-import com.twofortyfouram.assertion.Assertions;
-import com.twofortyfouram.spackle.util.ThreadUtil;
-import com.twofortyfouram.spackle.util.ThreadUtil.ThreadPriority;
-
-import net.jcip.annotations.ThreadSafe;
-
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.os.Build.VERSION_CODES;
@@ -30,6 +24,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Pair;
+
+import com.twofortyfouram.spackle.util.ThreadUtil;
+import com.twofortyfouram.spackle.util.ThreadUtil.ThreadPriority;
+
+import net.jcip.annotations.ThreadSafe;
+
+import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
  * Simplifies asynchronous broadcast handling. Subclasses call
@@ -45,7 +46,7 @@ import android.util.Pair;
      */
     @TargetApi(VERSION_CODES.HONEYCOMB)
     /* package */ final void goAsyncWithCallback(@NonNull final AsyncCallback callback) {
-        Assertions.assertNotNull(callback, "callback"); //$NON-NLS-1$
+        assertNotNull(callback, "callback"); //$NON-NLS-1$
 
         final PendingResult pendingResult = goAsync();
         if (null == pendingResult) {
@@ -69,13 +70,12 @@ import android.util.Pair;
 
         @Override
         public boolean handleMessage(final Message msg) {
-            Assertions.assertNotNull(msg, "msg"); //$NON-NLS-1$
+            assertNotNull(msg, "msg"); //$NON-NLS-1$
             switch (msg.what) {
                 case MESSAGE_HANDLE_CALLBACK: {
-                    Assertions.assertNotNull(msg.obj, "msg.obj"); //$NON-NLS-1$
+                    assertNotNull(msg.obj, "msg.obj"); //$NON-NLS-1$
 
-                    final Pair<PendingResult, AsyncCallback> pair
-                            = (Pair<PendingResult, AsyncCallback>) msg.obj;
+                    final Pair<PendingResult, AsyncCallback> pair = castObj(msg.obj);
 
                     final PendingResult pendingResult = pair.first;
                     final AsyncCallback asyncCallback = pair.second;
@@ -92,6 +92,12 @@ import android.util.Pair;
                 }
             }
             return false;
+        }
+
+        @NonNull
+        @SuppressWarnings("unchecked")
+        private static Pair<PendingResult, AsyncCallback> castObj(@NonNull final Object o) {
+            return (Pair<PendingResult, AsyncCallback>) o;
         }
     }
 
