@@ -15,6 +15,12 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBarActivity;
+
 import com.twofortyfouram.annotation.VisibleForTesting;
 import com.twofortyfouram.annotation.VisibleForTesting.Visibility;
 import com.twofortyfouram.assertion.Assertions;
@@ -25,18 +31,12 @@ import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-
 /**
- * <p>NOTE: This class is for backwards compatibility via the support-v4 library.  To use this
- * class, support-v4 must be on the application's build path.  Typically, this would involve adding
- * support-v4 to the dependencies section of the application's build.gradle script.  For example,
+ * <p>NOTE: This class is for compatibility with Material Design via the appcompat-v7 library.  To use this
+ * class, appcompat-v7 must be on the application's build path.  Typically, this would involve adding
+ * appcompat-v7 to the dependencies section of the application's build.gradle script.  For example,
  * the dependency might look something like this
- * {@code compile group:'com.android.support', name:'support-v4', version:'[21,)'}</p>
+ * {@code compile group:'com.android.support', name:'appcompat-v7', version:'[21,)'}</p>
  * <p>
  * Implements the basic behaviors of a "Edit" activity for a
  * plug-in, handling the Intent protocol for storing and retrieving the plug-in's data.
@@ -59,8 +59,8 @@ import android.support.v4.app.FragmentActivity;
  * saved plug-in instance that the user is editing. The previously saved Bundle
  * and blurb can be retrieved at any time via {@link #getPreviousBundle()} and
  * {@link #getPreviousBlurb()}. These will also be delivered via
- * {@link #onPostCreateWithPreviousResult(Bundle, String)} during the
- * Activity's {@link #onPostCreate(Bundle)} phase when the Activity is first
+ * {@link #onPostCreateWithPreviousResult(android.os.Bundle, String)} during the
+ * Activity's {@link #onPostCreate(android.os.Bundle)} phase when the Activity is first
  * created.</li>
  * </ul>
  * <p>During
@@ -77,7 +77,7 @@ import android.support.v4.app.FragmentActivity;
  * @see com.twofortyfouram.locale.api.Intent#ACTION_EDIT_SETTING ACTION_EDIT_SETTING
  */
 @NotThreadSafe
-public abstract class AbstractFragmentPluginActivity extends FragmentActivity {
+public abstract class AbstractActionBarPluginActivity extends ActionBarActivity {
 
     /**
      * Flag boolean that can be set prior to calling {@link #finish()} to control whether the
@@ -100,8 +100,8 @@ public abstract class AbstractFragmentPluginActivity extends FragmentActivity {
 
         final String action = intent.getAction();
 
-        return com.twofortyfouram.locale.api.Intent.ACTION_EDIT_CONDITION.equals(action)
-                || com.twofortyfouram.locale.api.Intent.ACTION_EDIT_SETTING.equals(action);
+        return com.twofortyfouram.locale.api.Intent.ACTION_EDIT_CONDITION.equals(action) || com.twofortyfouram.locale
+                .api.Intent.ACTION_EDIT_SETTING.equals(action);
     }
 
     @Override
@@ -114,9 +114,8 @@ public abstract class AbstractFragmentPluginActivity extends FragmentActivity {
             final Bundle previousBundle = getPreviousBundle();
             BundleScrubber.scrub(previousBundle);
 
-            Lumberjack
-                    .v("Creating Activity with Intent=%s, savedInstanceState=%s, EXTRA_BUNDLE=%s",
-                            getIntent(), savedInstanceState, previousBundle); //$NON-NLS-1$
+            Lumberjack.v("Creating Activity with Intent=%s, savedInstanceState=%s, EXTRA_BUNDLE=%s", getIntent(),
+                    savedInstanceState, previousBundle); //$NON-NLS-1$
         }
     }
 
@@ -147,14 +146,11 @@ public abstract class AbstractFragmentPluginActivity extends FragmentActivity {
                     final String blurb = getResultBlurb(resultBundle);
                     Assertions.assertNotNull(blurb, "blurb"); //$NON-NLS-1$
 
-                    if (!BundleComparer.areBundlesEqual(resultBundle, getPreviousBundle())
-                            && !blurb.equals(getPreviousBlurb())) {
+                    if (!BundleComparer.areBundlesEqual(resultBundle, getPreviousBundle()) && !blurb.equals
+                            (getPreviousBlurb())) {
                         final Intent resultIntent = new Intent();
-                        resultIntent.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE,
-                                resultBundle);
-                        resultIntent.putExtra(
-                                com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB,
-                                blurb);
+                        resultIntent.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE, resultBundle);
+                        resultIntent.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB, blurb);
 
                         setResult(RESULT_OK, resultIntent);
                     }
@@ -177,8 +173,7 @@ public abstract class AbstractFragmentPluginActivity extends FragmentActivity {
      */
     @Nullable
     public final Bundle getPreviousBundle() {
-        final Bundle bundle = getIntent().getBundleExtra(
-                com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
+        final Bundle bundle = getIntent().getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
 
         if (null != bundle) {
             if (isBundleValid(bundle)) {
@@ -197,8 +192,7 @@ public abstract class AbstractFragmentPluginActivity extends FragmentActivity {
      */
     @Nullable
     public final String getPreviousBlurb() {
-        final String blurb = getIntent().getStringExtra(
-                com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB);
+        final String blurb = getIntent().getStringExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB);
 
         return blurb;
     }
@@ -231,8 +225,8 @@ public abstract class AbstractFragmentPluginActivity extends FragmentActivity {
      * @param previousBundle Previous bundle that the Activity saved.
      * @param previousBlurb  Previous blurb that the Activity saved
      */
-    public abstract void onPostCreateWithPreviousResult(
-            @NonNull final Bundle previousBundle, @NonNull final String previousBlurb);
+    public abstract void onPostCreateWithPreviousResult(@NonNull final Bundle previousBundle,
+                                                        @NonNull final String previousBlurb);
 
     /**
      * @return Bundle for the plug-in or {@code null} if a valid Bundle cannot

@@ -7,8 +7,8 @@ dependencies {
     // This should be 'provided' scope, however there is a bug with the Android Gradle
     // plugin so instead the dependency is filtered out from the POM
     // https://code.google.com/p/android/issues/detail?id=68316
-    compile group:'com.android.support', name:'support-v4', version:']19,)'
-
+    compile group:'com.android.support', name:'support-v4', version:'[21,)'
+    compile group:'com.android.support', name:'appcompat-v7', version:'[21,)'
     compile group:'net.jcip', name:'jcip-annotations', version:'1.0'
     compile group:'com.android.support', name:'support-annotations', version:'+'
     compile group:'com.twofortyfouram', name:'android-annotation', version:'[1.0.2,3.0['
@@ -49,11 +49,20 @@ android.libraryVariants.all { variant ->
         description "Generates Javadoc for $variant.name."
         def androidHome = System.getenv('ANDROID_HOME')
         source = variant.javaCompile.source
-        classpath = files(variant.javaCompile.classpath.files) + files("${androidHome}/platforms/${android.compileSdkVersion}/android.jar")
+        classpath = files(variant.javaCompile.classpath.files) + files("${androidHome}/platforms/${android.compileSdkVersion}/android.jar") + files("${androidHome}/extras/android/support/v4/android-support-v4.jar")
         options.linksOffline('http://developer.android.com/reference/', "${androidHome}/docs/reference")
         options.links('http://jcip.net.s3-website-us-east-1.amazonaws.com/annotations/doc/', 'http://twofortyfouram.github.io/android-annotation/', 'http://twofortyfouram.github.io/android-plugin-api-for-locale/')
         exclude '**/HostPackageUtil.java'
         exclude '**/UiResConstants.java'
+    }
+}
+
+// Java8 fails the build because of an error with Javadoc involving formatting. Prevent this (for Travis CI)
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
     }
 }
 
@@ -76,8 +85,8 @@ uploadArchives {
                     }
                 }
             }
-            // Exclude support.v4, making it an optional dependency
-            pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'support-v4' } }
+            // Exclude support.v4 & appcompat-v7, making them optional dependencies
+            pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && (dep.artifactId == 'support-v4' || dep.artifactId == 'appcompat-v7') } }
         }
     }
 }
@@ -88,8 +97,8 @@ task installArchives(type: Upload) {
     description "Installs artifacts to mavenLocal."
     repositories.mavenInstaller {
         configuration = configurations.default
-        // Exclude support.v4, making it an optional dependency
-        pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && dep.artifactId == 'support-v4' } }
+        // Exclude support.v4 & appcompat-v7, making them optional dependencies
+        pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && (dep.artifactId == 'support-v4' || dep.artifactId == 'appcompat-v7') } }
     }
 }
 
