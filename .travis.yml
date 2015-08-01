@@ -15,6 +15,7 @@ android:
     - android-22
     - android-23
     - docs-23
+    - extra-android-m2repository
   licenses:
     - 'android-sdk-license-.*'
 
@@ -32,7 +33,7 @@ before_script:
     - adb shell input keyevent 82 &
 
 script:
-  - TERM=dumb ./gradlew -PIS_PREDEXING_ENABLED=false -PIS_COVERAGE_ENABLED=true assemble connectedCheck check findbugs generateReleaseJavadoc
+  - TERM=dumb ./gradlew -PIS_PREDEXING_ENABLED=false -PIS_COVERAGE_ENABLED=true assemble connectedCheck check findbugs releaseJavadoc
 
 addons:
   artifacts:

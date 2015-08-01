@@ -25,8 +25,8 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Pair;
 
-import com.twofortyfouram.spackle.util.ThreadUtil;
-import com.twofortyfouram.spackle.util.ThreadUtil.ThreadPriority;
+import com.twofortyfouram.spackle.ThreadUtil;
+import com.twofortyfouram.spackle.ThreadUtil.ThreadPriority;
 
 import net.jcip.annotations.ThreadSafe;
 

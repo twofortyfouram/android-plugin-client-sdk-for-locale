@@ -31,9 +31,9 @@ import android.text.format.DateUtils;
 import com.twofortyfouram.locale.sdk.client.test.condition.receiver.PluginBundleValues;
 import com.twofortyfouram.locale.sdk.client.test.condition.receiver.PluginConditionReceiver;
 import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.ThreadUtil;
-import com.twofortyfouram.spackle.util.ThreadUtil.ThreadPriority;
-import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
+import com.twofortyfouram.spackle.ThreadUtil;
+import com.twofortyfouram.spackle.ThreadUtil.ThreadPriority;
+import com.twofortyfouram.spackle.bundle.BundleScrubber;
 
 import net.jcip.annotations.ThreadSafe;
 

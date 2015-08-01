@@ -22,7 +22,7 @@ import android.support.annotation.Nullable;
 
 import com.twofortyfouram.assertion.BundleAssertions;
 import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.AppBuildInfo;
+import com.twofortyfouram.spackle.AppBuildInfo;
 
 import net.jcip.annotations.ThreadSafe;
 

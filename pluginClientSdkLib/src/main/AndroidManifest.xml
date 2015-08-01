@@ -1,7 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.twofortyfouram.locale.sdk.client">
+<manifest package="com.twofortyfouram.locale.sdk.client">
 
-    <application/>
+    <application />
 
 </manifest>

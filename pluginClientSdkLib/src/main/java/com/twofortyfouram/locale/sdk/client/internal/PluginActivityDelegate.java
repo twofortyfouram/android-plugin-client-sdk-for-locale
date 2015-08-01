@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
 import com.twofortyfouram.assertion.BundleAssertions;
 import com.twofortyfouram.locale.sdk.client.ui.activity.IPluginActivity;
 import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.bundle.BundleComparer;
-import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
+import com.twofortyfouram.spackle.bundle.BundleComparer;
+import com.twofortyfouram.spackle.bundle.BundleScrubber;
 
 import net.jcip.annotations.Immutable;
 

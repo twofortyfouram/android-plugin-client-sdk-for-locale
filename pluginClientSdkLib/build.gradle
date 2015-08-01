@@ -18,6 +18,7 @@ dependencies {
     compile group:'com.twofortyfouram', name:'android-spackle', version:"${TWOFORTYFOURAM_SPACKLE_VERSION_MATCHER}"
 
     androidTestCompile group:'com.twofortyfouram', name:'android-test', version:"${TWOFORTYFOURAM_TEST_VERSION_MATCHER}"
+    androidTestCompile group:'com.android.support.test', name:'testing-support-lib', version:"${ANDROID_SUPPORT_TEST_VERSION_MATCHER}"
 }
 
 android {
@@ -31,6 +32,7 @@ android {
         targetSdkVersion Integer.parseInt(ANDROID_TARGET_SDK_VERSION)
         versionCode Integer.parseInt(ANDROID_VERSION_CODE)
         versionName ANDROID_VERSION_NAME
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         consumerProguardFiles 'proguard-consumer.txt'
     }
 
@@ -46,7 +48,7 @@ android {
 }
 
 android.libraryVariants.all { variant ->
-    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+    task("${variant.name}Javadoc", type: Javadoc) {
         description "Generates Javadoc for $variant.name."
         def androidHome = System.getenv('ANDROID_HOME')
         source = variant.javaCompile.source
@@ -100,6 +102,27 @@ task installArchives(type: Upload) {
         // Exclude support.v4 & appcompat-v7, making them optional dependencies
         pom.whenConfigured { pom -> pom.dependencies.removeAll {dep -> dep.groupId == 'com.android.support' && (dep.artifactId == 'support-v4' || dep.artifactId == 'appcompat-v7') } }
     }
+}
+
+// Generates the JavaDoc as a JAR for uploading an artifact
+android.libraryVariants.all { variant ->
+    task("${variant.name}JavadocJar", type: Jar, dependsOn: "${variant.name}Javadoc") {
+        classifier = 'javadoc'
+        from tasks["${variant.name}Javadoc"].destinationDir
+    }
+ 
+    project.artifacts.add('archives', tasks["${variant.name}JavadocJar"]);
+}
+
+
+// Generates the source as a JAR for uploading an artifact
+android.libraryVariants.all { variant ->
+    task("${variant.name}SourceJar", type: Jar) {
+        classifier = 'sources'
+        from variant.javaCompile.source
+    }
+ 
+    project.artifacts.add('archives', tasks["${variant.name}SourceJar"]);
 }
 
 task findbugs(type: FindBugs) {

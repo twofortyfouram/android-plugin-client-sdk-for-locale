@@ -30,10 +30,10 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.text.format.DateUtils;
 
 import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.ThreadUtil;
-import com.twofortyfouram.spackle.util.ThreadUtil.ThreadPriority;
-import com.twofortyfouram.spackle.util.bundle.BundleComparer;
-import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
+import com.twofortyfouram.spackle.ThreadUtil;
+import com.twofortyfouram.spackle.ThreadUtil.ThreadPriority;
+import com.twofortyfouram.spackle.bundle.BundleComparer;
+import com.twofortyfouram.spackle.bundle.BundleScrubber;
 
 import net.jcip.annotations.ThreadSafe;
 

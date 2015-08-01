@@ -3,14 +3,14 @@
     package="com.twofortyfouram.locale.sdk.client"
     android:installLocation="internalOnly">
 
-    <application android:name=".test.TestApplication">
+    <application android:name="com.twofortyfouram.locale.sdk.client.test.TestApplication">
 
         <activity
-            android:name=".test.condition.ui.activity.PluginActivityImpl"
+            android:name="com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.PluginActivityImpl"
             android:exported="false" />
 
         <activity
-            android:name=".test.condition.ui.activity.FragmentPluginActivityImpl"
+            android:name="com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.FragmentPluginActivityImpl"
             android:exported="false" />
 
         <activity
@@ -19,7 +19,7 @@
             android:theme="@style/Theme.AppCompat" />
 
         <receiver
-            android:name=".test.condition.receiver.PluginConditionReceiver"
+            android:name="com.twofortyfouram.locale.sdk.client.test.condition.receiver.PluginConditionReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>

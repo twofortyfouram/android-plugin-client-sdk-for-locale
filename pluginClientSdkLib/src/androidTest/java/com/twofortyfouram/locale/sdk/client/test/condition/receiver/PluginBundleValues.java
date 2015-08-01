@@ -24,7 +24,7 @@ import com.twofortyfouram.assertion.Assertions;
 import com.twofortyfouram.assertion.BundleAssertions;
 import com.twofortyfouram.locale.api.Intent;
 import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.AppBuildInfo;
+import com.twofortyfouram.spackle.AppBuildInfo;
 
 import net.jcip.annotations.ThreadSafe;
 

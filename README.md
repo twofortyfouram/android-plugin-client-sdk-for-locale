@@ -16,32 +16,23 @@ The library is compatible and optimized for Android API Level 8 and above.
 
 # Download
 ## Gradle
-The library is published as an artifact to the two forty four a.m. maven repository.  To use the library, the two forty four a.m. maven repository and the artifact need to be added to your build script.
+The library is published as an artifact to jCenter.  To use the library, the jCenter repository and the artifact need to be added to your build script.
 
 The build.gradle repositories section would look something like the following:
 
     repositories {
-        maven { url 'https://dl.bintray.com/twofortyfouram/maven' }
+        jcenter()
     }
 
 And the dependencies section would look something like this:
 
     dependencies {
-        compile group:'com.twofortyfouram', name:'android-plugin-client-sdk-for-locale', version:'[1.1.0, 2.0['
+        compile group:'com.twofortyfouram', name:'android-plugin-client-sdk-for-locale', version:'[2.0.0, 3.0['
     }
 
-## Ant
-Although migrating to Gradle is highly recommended, it is also possible to use the library in a legacy Ant build by following these steps:
 
-1. Download the AAR from the Github releases page
-1. Unzip the AAR
-1. Copy the classes.jar to the libs/ directory of the Android Ant project.  (We recommend renaming classes.jar to something more meaningful, such as android-plugin-client-sdk-for-locale.jar).
-1. Copy the resources to the res/ directory of the Android Ant project.
-1. The JARs for [android-annotation](https://github.com/twofortyfouram/android-annotation), [android-spackle](https://github.com/twofortyfouram/android-spackle), and [JCIP annotations](http://jcip.net) must also be included.
-
-
-## Creating a Plug-in
-### Fundamentals
+# Creating a Plug-in
+## Fundamentals
 A plug-in implementation consists of two things:
 
 1. Activity: for the [ACTION_EDIT_CONDITION](http://twofortyfouram.github.io/android-plugin-api-for-locale/com/twofortyfouram/locale/api/Intent.html#ACTION_EDIT_CONDITION) or [ACTION_EDIT_SETTING](http://twofortyfouram.github.io/android-plugin-api-for-locale/com/twofortyfouram/locale/api/Intent.html#ACTION_EDIT_SETTING) Intent action.
@@ -50,7 +41,7 @@ A plug-in implementation consists of two things:
 At runtime the host launches the plug-in's Activity, the plug-in's Activity returns a Bundle to the host, and the host will send that Bundle back to the plug-in's BroadcastReceiver when it is time to query/fire the plug-in.  The host may also pass the Bundle back to the Activity in the future, if the user wishes to edit the plug-in's configuration again.
 
 
-### Step by Step
+## Step by Step
 1. Add dependencies to build.gradle as described in the Usage section above.
 1. Architect the contents of the plug-in's [EXTRA_BUNDLE](http://twofortyfouram.github.io/android-plugin-api-for-locale/com/twofortyfouram/locale/api/Intent.html#EXTRA_BUNDLE).  We recommend implementing a "BundleManager" object with static methods to verify the Bundle is correct, generate a new Bundle, and extract values from the Bundle.  
 1. Implement the "Edit" Activity:
@@ -114,7 +105,9 @@ At runtime the host launches the plug-in's Activity, the plug-in's Activity retu
                     </intent-filter>
                 </receiver>
 
+
 # History
 * 1.0.0: Initial release
 * 1.0.1: Fix diffing of plug-in edits.  Thanks @jkane001 for reporting this issue!
 * 1.1.0: Support for Material Design and appcompat-v7
+* 2.0.0: Update spackleLib dependency to 2.0.0

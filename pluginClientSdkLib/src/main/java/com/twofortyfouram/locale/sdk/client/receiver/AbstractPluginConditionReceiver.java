@@ -15,18 +15,18 @@
 
 package com.twofortyfouram.locale.sdk.client.receiver;
 
-import com.twofortyfouram.annotation.VisibleForTesting;
-import com.twofortyfouram.annotation.VisibleForTesting.Visibility;
-import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.AndroidSdkVersion;
-import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
+import com.twofortyfouram.annotation.VisibleForTesting;
+import com.twofortyfouram.annotation.VisibleForTesting.Visibility;
+import com.twofortyfouram.log.Lumberjack;
+import com.twofortyfouram.spackle.AndroidSdkVersion;
+import com.twofortyfouram.spackle.bundle.BundleScrubber;
 
 /**
  * <p>Abstract superclass for a plug-in condition BroadcastReceiver implementation.</p>

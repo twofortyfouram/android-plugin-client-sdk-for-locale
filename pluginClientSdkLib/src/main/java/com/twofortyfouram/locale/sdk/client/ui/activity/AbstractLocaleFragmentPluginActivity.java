@@ -30,7 +30,7 @@ import com.twofortyfouram.locale.sdk.client.R;
 import com.twofortyfouram.locale.sdk.client.internal.BreadCrumber;
 import com.twofortyfouram.locale.sdk.client.internal.PluginActivityDelegate;
 import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.AndroidSdkVersion;
+import com.twofortyfouram.spackle.AndroidSdkVersion;
 
 /**
  * <p>NOTE: This class is for backwards compatibility via the support-v4 library.  To use this
