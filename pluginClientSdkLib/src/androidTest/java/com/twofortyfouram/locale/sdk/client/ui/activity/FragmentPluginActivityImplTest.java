@@ -17,8 +17,8 @@ package com.twofortyfouram.locale.sdk.client.ui.activity;
 
 import com.twofortyfouram.assertion.Assertions;
 import com.twofortyfouram.assertion.BundleAssertions;
-import com.twofortyfouram.locale.sdk.client.debug.condition.ui.activity.FragmentPluginActivityImpl;
-import com.twofortyfouram.locale.sdk.client.debug.condition.ui.activity.PluginBundleValues;
+import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.FragmentPluginActivityImpl;
+import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.PluginBundleValues;
 import com.twofortyfouram.spackle.util.bundle.BundleComparer;
 import com.twofortyfouram.test.ui.activity.ActivityTestUtil;
 

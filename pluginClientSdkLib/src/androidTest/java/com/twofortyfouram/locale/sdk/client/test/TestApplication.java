@@ -13,13 +13,13 @@
  * limitations under the License.
  */
 
-package com.twofortyfouram.locale.sdk.client.debug;
-
-import com.twofortyfouram.log.Lumberjack;
+package com.twofortyfouram.locale.sdk.client.test;
 
 import android.app.Application;
 
-public final class DebugApplication extends Application {
+import com.twofortyfouram.log.Lumberjack;
+
+public final class TestApplication extends Application {
 
     @Override
     public void onCreate() {

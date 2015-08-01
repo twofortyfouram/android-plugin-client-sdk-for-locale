@@ -19,7 +19,14 @@ import android.content.Intent;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.twofortyfouram.test.assertion.MoarAsserts;
+
 public final class BreadCrumberTest extends AndroidTestCase {
+
+    @SmallTest
+    public void testNonInstantiable() {
+        MoarAsserts.assertNoninstantiable(BreadCrumber.class);
+    }
 
     @SmallTest
     public void testGenerateBreadcrumb_null_intent() {

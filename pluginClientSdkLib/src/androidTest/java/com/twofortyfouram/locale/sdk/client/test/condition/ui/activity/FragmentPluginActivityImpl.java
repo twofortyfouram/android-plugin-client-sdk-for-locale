@@ -13,15 +13,15 @@
  * limitations under the License.
  */
 
-package com.twofortyfouram.locale.sdk.client.debug.condition.ui.activity;
-
-import com.twofortyfouram.assertion.Assertions;
-import com.twofortyfouram.locale.sdk.client.ui.activity.AbstractFragmentPluginActivity;
-import com.twofortyfouram.spackle.util.bundle.BundleComparer;
+package com.twofortyfouram.locale.sdk.client.test.condition.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.twofortyfouram.assertion.Assertions;
+import com.twofortyfouram.locale.sdk.client.ui.activity.AbstractFragmentPluginActivity;
+import com.twofortyfouram.spackle.util.bundle.BundleComparer;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.twofortyfouram.locale.sdk.client.debug.condition.ui.activity;
+package com.twofortyfouram.locale.sdk.client.test.condition.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

@@ -13,20 +13,19 @@
  * limitations under the License.
  */
 
-package com.twofortyfouram.locale.sdk.client.debug.condition.receiver;
-
-import com.twofortyfouram.spackle.util.AppBuildInfo;
-import com.twofortyfouram.assertion.Assertions;
-import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.assertion.BundleAssertions;
-import com.twofortyfouram.locale.api.Intent;
-
-import net.jcip.annotations.ThreadSafe;
+package com.twofortyfouram.locale.sdk.client.test.condition.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.twofortyfouram.assertion.Assertions;
+import com.twofortyfouram.assertion.BundleAssertions;
+import com.twofortyfouram.log.Lumberjack;
+import com.twofortyfouram.spackle.util.AppBuildInfo;
+
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Class for managing the {@link com.twofortyfouram.locale.api.Intent#EXTRA_BUNDLE} for this
@@ -36,17 +35,14 @@ import android.support.annotation.Nullable;
 public final class PluginBundleValues {
 
     /**
-     * TYPE: {@code int}
+     * TYPE: {@code String}
      * <p>
-     * An extra that contains the result code that the debug plug-in condition should return when
-     * queried.
-     *
-     * @see com.twofortyfouram.locale.api.Intent#RESULT_CONDITION_SATISFIED
-     * @see com.twofortyfouram.locale.api.Intent#RESULT_CONDITION_UNSATISFIED
-     * @see com.twofortyfouram.locale.api.Intent#RESULT_CONDITION_UNKNOWN
+     * An extra that maps to an arbitrary String value.
      */
-    public static final String BUNDLE_EXTRA_INT_RESULT_CODE
-            = "com.twofortyfouram.locale.sdk.client.debug.condition.extra.INT_CODE"; //$NON-NLS-1$
+    @NonNull
+    public static final String BUNDLE_EXTRA_STRING_KEY
+            = "com.twofortyfouram.locale.sdk.client.test.condition.extra.STRING_VALUE";
+    //$NON-NLS-1$
 
     /**
      * Type: {@code int}.
@@ -60,7 +56,8 @@ public final class PluginBundleValues {
      */
     @NonNull
     public static final String BUNDLE_EXTRA_INT_VERSION_CODE
-            = "com.twofortyfouram.locale.sdk.client.debug.condition.extra.INT_VERSION_CODE"; //$NON-NLS-1$
+            = "com.twofortyfouram.locale.sdk.client.test.condition.extra.INT_VERSION_CODE";
+    //$NON-NLS-1$
 
     /**
      * Method to verify the content of the bundle are correct.
@@ -76,9 +73,7 @@ public final class PluginBundleValues {
         }
 
         try {
-            BundleAssertions.assertHasInt(bundle, BUNDLE_EXTRA_INT_RESULT_CODE,
-                    Intent.RESULT_CONDITION_SATISFIED,
-                    Intent.RESULT_CONDITION_UNKNOWN);
+            BundleAssertions.assertHasString(bundle, BUNDLE_EXTRA_STRING_KEY, false, false);
             BundleAssertions.assertHasInt(bundle, BUNDLE_EXTRA_INT_VERSION_CODE);
             BundleAssertions.assertKeyCount(bundle, 2);
         } catch (final AssertionError e) {
@@ -90,34 +85,30 @@ public final class PluginBundleValues {
     }
 
     /**
-     * @param context    Application context.
-     * @param resultCode The result code the plug-in should respond with when queried.
+     * @param context Application context.
+     * @param value   The value stored in the plug-in bundle.
      * @return A plug-in bundle.
      */
     @NonNull
     public static Bundle generateBundle(@NonNull final Context context,
-            @NonNull final int resultCode) {
+            @NonNull final String value) {
         Assertions.assertNotNull(context, "context"); //$NON-NLS-1$
-        Assertions.assertInRangeInclusive(resultCode,
-                Intent.RESULT_CONDITION_SATISFIED,
-                Intent.RESULT_CONDITION_UNKNOWN,
-                "resultCode"); //$NON-NLS-1$
+        Assertions.assertNotEmpty(value, "value"); //$NON-NLS-1$
 
         final Bundle result = new Bundle();
         result.putInt(BUNDLE_EXTRA_INT_VERSION_CODE, AppBuildInfo.getVersionCode(context));
-        result.putInt(BUNDLE_EXTRA_INT_RESULT_CODE, resultCode);
+        result.putString(BUNDLE_EXTRA_STRING_KEY, value);
 
         return result;
     }
 
     /**
      * @param bundle A valid plug-in bundle.
-     * @return The result code inside the plug-in bundle.  Will return 0 if the result code does not
-     * exist in {@code bundle}.
+     * @return The value inside the plug-in bundle.
      */
     @NonNull
-    public static int getResultCode(@NonNull final Bundle bundle) {
-        return bundle.getInt(BUNDLE_EXTRA_INT_RESULT_CODE);
+    public static String getValue(@NonNull final Bundle bundle) {
+        return bundle.getString(BUNDLE_EXTRA_STRING_KEY);
     }
 
     /**

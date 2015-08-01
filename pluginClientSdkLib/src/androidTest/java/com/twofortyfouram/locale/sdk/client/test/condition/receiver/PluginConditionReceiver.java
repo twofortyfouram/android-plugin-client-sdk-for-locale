@@ -13,14 +13,14 @@
  * limitations under the License.
  */
 
-package com.twofortyfouram.locale.sdk.client.debug.condition.receiver;
+package com.twofortyfouram.locale.sdk.client.test.condition.receiver;
 
-
-import com.twofortyfouram.locale.sdk.client.receiver.AbstractPluginConditionReceiver;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
+import com.twofortyfouram.locale.sdk.client.receiver.AbstractPluginConditionReceiver;
 
 /**
  * A basic well-formed plug-in Condition receiver.

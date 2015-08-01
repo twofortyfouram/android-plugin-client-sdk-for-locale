@@ -1,11 +1,17 @@
 package com.twofortyfouram.locale.sdk.client.ui.util;
 
-import com.twofortyfouram.locale.sdk.client.R;
-
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.twofortyfouram.locale.sdk.client.R;
+import com.twofortyfouram.test.assertion.MoarAsserts;
+
 public final class UiResConstantsTest extends AndroidTestCase {
+
+    @SmallTest
+    public void testNonInstantiable() {
+        MoarAsserts.assertNoninstantiable(UiResConstants.class);
+    }
 
     @SmallTest
     public static void testMenu_constant() {

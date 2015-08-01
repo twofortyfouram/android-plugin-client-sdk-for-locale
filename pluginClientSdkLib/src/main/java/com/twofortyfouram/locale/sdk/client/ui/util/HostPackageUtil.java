@@ -15,20 +15,20 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.util;
 
-import com.twofortyfouram.assertion.Assertions;
-
-import net.jcip.annotations.ThreadSafe;
-
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import net.jcip.annotations.ThreadSafe;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 @ThreadSafe
 public final class HostPackageUtil {
@@ -98,7 +98,7 @@ public final class HostPackageUtil {
     @Nullable
     public static String getCompatiblePackage(@NonNull final PackageManager packageManager,
             @Nullable final String packageHint) {
-        Assertions.assertNotNull(packageManager, "packageManager"); //$NON-NLS-1$
+        assertNotNull(packageManager, "packageManager"); //$NON-NLS-1$
 
         final List<PackageInfo> installedPackages = packageManager.getInstalledPackages(0);
 

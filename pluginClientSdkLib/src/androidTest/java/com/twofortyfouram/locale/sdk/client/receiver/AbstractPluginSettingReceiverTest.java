@@ -16,14 +16,6 @@
 package com.twofortyfouram.locale.sdk.client.receiver;
 
 
-import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.ThreadUtil;
-import com.twofortyfouram.spackle.util.ThreadUtil.ThreadPriority;
-import com.twofortyfouram.spackle.util.bundle.BundleComparer;
-import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
-
-import net.jcip.annotations.ThreadSafe;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,6 +28,14 @@ import android.support.annotation.NonNull;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.text.format.DateUtils;
+
+import com.twofortyfouram.log.Lumberjack;
+import com.twofortyfouram.spackle.util.ThreadUtil;
+import com.twofortyfouram.spackle.util.ThreadUtil.ThreadPriority;
+import com.twofortyfouram.spackle.util.bundle.BundleComparer;
+import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
+
+import net.jcip.annotations.ThreadSafe;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -202,7 +202,7 @@ public final class AbstractPluginSettingReceiverTest extends AndroidTestCase {
         /* package */ final CountDownLatch mLatch = new CountDownLatch(1);
 
         @NonNull
-        /* package */ AtomicInteger mQueryResult = new AtomicInteger(0);
+        /* package */ final AtomicInteger mQueryResult = new AtomicInteger(0);
 
         @Override
         public void onReceive(final Context context, final Intent intent) {

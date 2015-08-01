@@ -15,12 +15,6 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.activity;
 
-import com.twofortyfouram.assertion.Assertions;
-import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.ResourceUtil;
-
-import net.jcip.annotations.NotThreadSafe;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +23,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.twofortyfouram.log.Lumberjack;
+import com.twofortyfouram.spackle.util.ResourceUtil;
+
+import net.jcip.annotations.NotThreadSafe;
+
 import java.util.Locale;
+
+import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
  * If the user tries to launch the plug-in via the app store,
@@ -73,9 +74,9 @@ public final class InfoActivity extends Activity {
     /* package */ static Intent getLaunchIntent(@NonNull final Context context,
             @NonNull final PackageManager manager,
             @NonNull final String myPackageName) {
-        Assertions.assertNotNull(context, "context"); //$NON-NLS-1$
-        Assertions.assertNotNull(manager, "manager"); //$NON-NLS-1$
-        Assertions.assertNotNull(myPackageName, "myPackageName"); //$NON-NLS-1$
+        assertNotNull(context, "context"); //$NON-NLS-1$
+        assertNotNull(manager, "manager"); //$NON-NLS-1$
+        assertNotNull(myPackageName, "myPackageName"); //$NON-NLS-1$
 
         final String compatiblePackage
                 = com.twofortyfouram.locale.sdk.client.ui.util.HostPackageUtil

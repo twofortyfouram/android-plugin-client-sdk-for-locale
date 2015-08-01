@@ -15,18 +15,25 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.util;
 
-import net.jcip.annotations.ThreadSafe;
-
 import android.content.pm.PackageInfo;
 import android.support.annotation.NonNull;
 import android.test.AndroidTestCase;
 import android.test.mock.MockPackageManager;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.twofortyfouram.test.assertion.MoarAsserts;
+
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public final class HostPackageUtilTest extends AndroidTestCase {
+
+    @SmallTest
+    public void testNonInstantiable() {
+        MoarAsserts.assertNoninstantiable(HostPackageUtil.class);
+    }
 
     @SmallTest
     public void testGetCompatiblePackage_hinted_positive() {

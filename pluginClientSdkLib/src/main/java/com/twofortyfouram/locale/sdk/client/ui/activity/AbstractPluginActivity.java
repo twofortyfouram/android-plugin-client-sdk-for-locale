@@ -15,9 +15,14 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.twofortyfouram.annotation.VisibleForTesting;
 import com.twofortyfouram.annotation.VisibleForTesting.Visibility;
-import com.twofortyfouram.assertion.Assertions;
 import com.twofortyfouram.assertion.BundleAssertions;
 import com.twofortyfouram.log.Lumberjack;
 import com.twofortyfouram.spackle.util.bundle.BundleComparer;
@@ -25,11 +30,7 @@ import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
  * <p>
@@ -91,7 +92,7 @@ public abstract class AbstractPluginActivity extends Activity {
      */
     @VisibleForTesting(Visibility.PRIVATE)
     /* package */ static boolean isLocalePluginIntent(@NonNull final Intent intent) {
-        Assertions.assertNotNull(intent, "intent"); //$NON-NLS-1$
+        assertNotNull(intent, "intent"); //$NON-NLS-1$
 
         final String action = intent.getAction();
 
@@ -140,7 +141,7 @@ public abstract class AbstractPluginActivity extends Activity {
                     BundleAssertions.assertSerializable(resultBundle);
 
                     final String blurb = getResultBlurb(resultBundle);
-                    Assertions.assertNotNull(blurb, "blurb"); //$NON-NLS-1$
+                    assertNotNull(blurb, "blurb"); //$NON-NLS-1$
 
                     if (!BundleComparer.areBundlesEqual(resultBundle, getPreviousBundle())
                             && !blurb.equals(getPreviousBlurb())) {
