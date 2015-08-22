@@ -149,7 +149,7 @@ public abstract class AbstractFragmentPluginActivity extends FragmentActivity {
                     assertNotNull(blurb, "blurb"); //$NON-NLS-1$
 
                     if (!BundleComparer.areBundlesEqual(resultBundle, getPreviousBundle())
-                            && !blurb.equals(getPreviousBlurb())) {
+                            || !blurb.equals(getPreviousBlurb())) {
                         final Intent resultIntent = new Intent();
                         resultIntent.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE,
                                 resultBundle);

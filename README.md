@@ -25,9 +25,9 @@ The build.gradle repositories section would look something like the following:
     }
 
 And the dependencies section would look something like this:
-    
+
     dependencies {
-        compile group:'com.twofortyfouram', name:'android-plugin-client-sdk-for-locale', version:'[1.0.0, 2.0['
+        compile group:'com.twofortyfouram', name:'android-plugin-client-sdk-for-locale', version:'[1.0.1, 2.0['
     }
 
 ## Ant
@@ -113,3 +113,7 @@ At runtime the host launches the plug-in's Activity, the plug-in's Activity retu
                         <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING"/>
                     </intent-filter>
                 </receiver>
+
+# History
+* 1.0.0: Initial release
+* 1.0.1: Fix diffing of plug-in edits.  Thanks @jkane001 for reporting this issue!

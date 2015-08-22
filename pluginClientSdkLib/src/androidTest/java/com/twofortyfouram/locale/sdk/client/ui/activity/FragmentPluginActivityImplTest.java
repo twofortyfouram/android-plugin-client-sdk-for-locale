@@ -15,15 +15,6 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.activity;
 
-import com.twofortyfouram.assertion.Assertions;
-import com.twofortyfouram.assertion.BundleAssertions;
-import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.FragmentPluginActivityImpl;
-import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.PluginBundleValues;
-import com.twofortyfouram.spackle.util.bundle.BundleComparer;
-import com.twofortyfouram.test.ui.activity.ActivityTestUtil;
-
-import net.jcip.annotations.ThreadSafe;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +26,15 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
+
+import com.twofortyfouram.assertion.Assertions;
+import com.twofortyfouram.assertion.BundleAssertions;
+import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.FragmentPluginActivityImpl;
+import com.twofortyfouram.locale.sdk.client.test.condition.ui.activity.PluginBundleValues;
+import com.twofortyfouram.spackle.util.bundle.BundleComparer;
+import com.twofortyfouram.test.ui.activity.ActivityTestUtil;
+
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Superclass for Activity unit tests that provides facilities to make testing
@@ -70,7 +70,7 @@ public final class FragmentPluginActivityImplTest extends
             setActivityIntent(getDefaultStartIntent(PluginType.CONDITION));
         } else if ("testNewSetting_save".equals(getName())) { //$NON-NLS-1$
             setActivityIntent(getDefaultStartIntent(PluginType.SETTING));
-        } else if ("testOldCondition_save".equals(getName())) { //$NON-NLS-1$
+        } else if ("testOldCondition_save_bundle_and_blurb_changed".equals(getName())) { //$NON-NLS-1$
             final Bundle bundle = PluginBundleValues
                     .generateBundle(context, "some_old_test_value");  //$NON-NLS-1$
 
@@ -80,7 +80,47 @@ public final class FragmentPluginActivityImplTest extends
                     "Some old blurb"); //$NON-NLS-1$
 
             setActivityIntent(i);
-        } else if ("testOldSetting_save".equals(getName())) { //$NON-NLS-1$
+        } else if ("testOldCondition_save_bundle_changed".equals(getName())) { //$NON-NLS-1$
+            final Bundle bundle = PluginBundleValues
+                    .generateBundle(context, "some_old_test_value");  //$NON-NLS-1$
+
+            final Intent i = getDefaultStartIntent(PluginType.CONDITION);
+            i.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE, bundle);
+            i.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB,
+                    "Some old blurb"); //$NON-NLS-1$
+
+            setActivityIntent(i);
+        } else if ("testOldCondition_save_blurb_changed".equals(getName())) { //$NON-NLS-1$
+            final Bundle bundle = PluginBundleValues
+                    .generateBundle(context, "some_old_test_value");  //$NON-NLS-1$
+
+            final Intent i = getDefaultStartIntent(PluginType.CONDITION);
+            i.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE, bundle);
+            i.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB,
+                    "Some old blurb"); //$NON-NLS-1$
+
+            setActivityIntent(i);
+        } else if ("testOldSetting_save_bundle_and_blurb_changed".equals(getName())) { //$NON-NLS-1$
+            final Bundle bundle = PluginBundleValues
+                    .generateBundle(context, "some_old_test_value");  //$NON-NLS-1$
+
+            final Intent i = getDefaultStartIntent(PluginType.SETTING);
+            i.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE, bundle);
+            i.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB,
+                    "Some old blurb"); //$NON-NLS-1$
+
+            setActivityIntent(i);
+        } else if ("testOldSetting_save_bundle_changed".equals(getName())) { //$NON-NLS-1$
+            final Bundle bundle = PluginBundleValues
+                    .generateBundle(context, "some_old_test_value");  //$NON-NLS-1$
+
+            final Intent i = getDefaultStartIntent(PluginType.SETTING);
+            i.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE, bundle);
+            i.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB,
+                    "Some old blurb"); //$NON-NLS-1$
+
+            setActivityIntent(i);
+        } else if ("testOldSetting_save_blurb_changed".equals(getName())) { //$NON-NLS-1$
             final Bundle bundle = PluginBundleValues
                     .generateBundle(context, "some_old_test_value");  //$NON-NLS-1$
 
@@ -110,8 +150,7 @@ public final class FragmentPluginActivityImplTest extends
                     "Some old blurb"); //$NON-NLS-1$
 
             setActivityIntent(i);
-        }
-        else if ("testOldCondition_bad_bundle".equals(getName())) { //$NON-NLS-1$
+        } else if ("testOldCondition_bad_bundle".equals(getName())) { //$NON-NLS-1$
             final Bundle bundle = PluginBundleValues
                     .generateBundle(context, "some_old_test_value");  //$NON-NLS-1$
             bundle.putString("extra_key", "extra_value");
@@ -122,8 +161,7 @@ public final class FragmentPluginActivityImplTest extends
                     "Some old blurb"); //$NON-NLS-1$
 
             setActivityIntent(i);
-        }
-        else if ("testOldSetting_bad_bundle".equals(getName())) { //$NON-NLS-1$
+        } else if ("testOldSetting_bad_bundle".equals(getName())) { //$NON-NLS-1$
             final Bundle bundle = PluginBundleValues
                     .generateBundle(context, "some_old_test_value");  //$NON-NLS-1$
             bundle.putString("extra_key", "extra_value");
@@ -223,7 +261,7 @@ public final class FragmentPluginActivityImplTest extends
 
     @MediumTest
     @UiThreadTest
-    public void testOldCondition_save() {
+    public void testOldCondition_save_bundle_and_blurb_changed() {
         final FragmentPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
@@ -252,7 +290,62 @@ public final class FragmentPluginActivityImplTest extends
 
     @MediumTest
     @UiThreadTest
-    public void testOldSetting_save() {
+    public void testOldCondition_save_bundle_changed() {
+        final FragmentPluginActivityImpl activity = getActivity();
+
+        assertIsBundleValidCount(2);
+        assertOnPostCreateWithPreviousBundleCount(1);
+
+        final Bundle oldBundle = PluginBundleValues
+                .generateBundle(getInstrumentation().getContext(),
+                        "some_old_test_value"); //$NON-NLS-1$
+        assertTrue(BundleComparer.areBundlesEqual(oldBundle, activity.getPreviousBundle()));
+
+        final String oldBlurb = "Some old blurb"; //$NON-NLS-1$
+        assertEquals(oldBlurb, activity.getPreviousBlurb()); //$NON-NLS-1$
+
+        final Bundle newBundle = PluginBundleValues
+                .generateBundle(getInstrumentation().getContext(), "some_new_test_value"); //$NON-NLS-1$
+
+        setActivityBundleAndBlurb(newBundle, oldBlurb);
+
+        activity.finish();
+
+        assertGetResultBundleCount(1);
+        assertGetBlurbCount(1);
+
+        assertActivityResult(Activity.RESULT_OK, newBundle, oldBlurb);
+    }
+
+    @MediumTest
+    @UiThreadTest
+    public void testOldCondition_save_blurb_changed() {
+        final FragmentPluginActivityImpl activity = getActivity();
+
+        assertIsBundleValidCount(2);
+        assertOnPostCreateWithPreviousBundleCount(1);
+
+        final Bundle oldBundle = PluginBundleValues
+                .generateBundle(getInstrumentation().getContext(),
+                        "some_old_test_value"); //$NON-NLS-1$
+        assertTrue(BundleComparer.areBundlesEqual(oldBundle, activity.getPreviousBundle()));
+        assertEquals("Some old blurb", activity.getPreviousBlurb()); //$NON-NLS-1$
+
+        final String newBlurb = "Some new blurb"; //$NON-NLS-1$
+
+        setActivityBundleAndBlurb(oldBundle, newBlurb);
+
+        activity.finish();
+
+        assertGetResultBundleCount(1);
+        assertGetBlurbCount(1);
+
+        assertActivityResult(Activity.RESULT_OK, oldBundle, newBlurb);
+    }
+
+    @MediumTest
+    @UiThreadTest
+    public void testOldSetting_save_bundle_and_blurb_changed() {
         final FragmentPluginActivityImpl activity = getActivity();
 
         assertIsBundleValidCount(2);
@@ -265,7 +358,7 @@ public final class FragmentPluginActivityImplTest extends
         assertEquals("Some old blurb", activity.getPreviousBlurb()); //$NON-NLS-1$
 
         final Bundle newBundle = PluginBundleValues
-                .generateBundle(getInstrumentation().getContext(), "Some new blurb"); //$NON-NLS-1$
+                .generateBundle(getInstrumentation().getContext(), "some_new_test_value"); //$NON-NLS-1$
 
         final String newBlurb = "Some new blurb"; //$NON-NLS-1$
 
@@ -277,6 +370,61 @@ public final class FragmentPluginActivityImplTest extends
         assertGetBlurbCount(1);
 
         assertActivityResult(Activity.RESULT_OK, newBundle, newBlurb);
+    }
+
+    @MediumTest
+    @UiThreadTest
+    public void testOldSetting_save_bundle_changed() {
+        final FragmentPluginActivityImpl activity = getActivity();
+
+        assertIsBundleValidCount(2);
+        assertOnPostCreateWithPreviousBundleCount(1);
+
+        final Bundle oldBundle = PluginBundleValues
+                .generateBundle(getInstrumentation().getContext(),
+                        "some_old_test_value"); //$NON-NLS-1$
+        assertTrue(BundleComparer.areBundlesEqual(oldBundle, activity.getPreviousBundle()));
+
+        final String oldBlurb = "Some old blurb"; //$NON-NLS-1$
+        assertEquals(oldBlurb, activity.getPreviousBlurb()); //$NON-NLS-1$
+
+        final Bundle newBundle = PluginBundleValues
+                .generateBundle(getInstrumentation().getContext(), "some_new_test_value"); //$NON-NLS-1$
+
+        setActivityBundleAndBlurb(newBundle, oldBlurb);
+
+        activity.finish();
+
+        assertGetResultBundleCount(1);
+        assertGetBlurbCount(1);
+
+        assertActivityResult(Activity.RESULT_OK, newBundle, oldBlurb);
+    }
+
+    @MediumTest
+    @UiThreadTest
+    public void testOldSetting_save_blurb_changed() {
+        final FragmentPluginActivityImpl activity = getActivity();
+
+        assertIsBundleValidCount(2);
+        assertOnPostCreateWithPreviousBundleCount(1);
+
+        final Bundle oldBundle = PluginBundleValues
+                .generateBundle(getInstrumentation().getContext(),
+                        "some_old_test_value"); //$NON-NLS-1$
+        assertTrue(BundleComparer.areBundlesEqual(oldBundle, activity.getPreviousBundle()));
+        assertEquals("Some old blurb", activity.getPreviousBlurb()); //$NON-NLS-1$
+
+        final String newBlurb = "Some new blurb"; //$NON-NLS-1$
+
+        setActivityBundleAndBlurb(oldBundle, newBlurb);
+
+        activity.finish();
+
+        assertGetResultBundleCount(1);
+        assertGetBlurbCount(1);
+
+        assertActivityResult(Activity.RESULT_OK, oldBundle, newBlurb);
     }
 
     @MediumTest
@@ -375,7 +523,7 @@ public final class FragmentPluginActivityImplTest extends
     }
 
     private void setActivityBundleAndBlurb(@Nullable final Bundle bundle,
-            @Nullable final String blurb) {
+                                           @Nullable final String blurb) {
         FragmentPluginActivityImpl activity = getActivity();
         activity.mBundle = bundle;
         activity.mBlurb = blurb;
@@ -383,7 +531,7 @@ public final class FragmentPluginActivityImplTest extends
 
     /**
      * Asserts the Activity result is correct.
-     * <p>
+     * <p/>
      * {@link android.app.Activity#finish()} must be called prior to calling this method.
      *
      * @param bundle The bundle to verify exists. Null indicates that no bundle
@@ -392,7 +540,7 @@ public final class FragmentPluginActivityImplTest extends
      *               should be present (not that a null blurb should be present).
      */
     private void assertActivityResult(final int resultCode, @Nullable final Bundle bundle,
-            @Nullable final String blurb) {
+                                      @Nullable final String blurb) {
         final Activity activity = getActivity();
 
         assertEquals(resultCode, ActivityTestUtil.getActivityResultCode(activity));
@@ -525,7 +673,7 @@ public final class FragmentPluginActivityImplTest extends
         private final String mReceiverIntentAction;
 
         private PluginType(@NonNull final String activityIntentAction,
-                @NonNull final String receiverIntentAction) {
+                           @NonNull final String receiverIntentAction) {
             Assertions.assertNotEmpty(activityIntentAction, "activityIntentAction"); //$NON-NLS-1$
             Assertions.assertNotEmpty(receiverIntentAction, "receiverIntentAction"); //$NON-NLS-1$
 
