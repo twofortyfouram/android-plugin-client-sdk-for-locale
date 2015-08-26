@@ -4,15 +4,16 @@ sudo: false
 
 android:
   components:
-    - platform-tools-22.0.0
-    - tools-24.3.3
-    - build-tools-22.0.1
+    - platform-tools-23.0.0
+    - tools-24.3.4
+    - build-tools-23.0.0
     
     - android-8
     - android-10
     - android-19
     - android-22
-    - docs-22
+    - android-23
+    - docs-23
   licenses:
     - 'android-sdk-license-.*'
 
