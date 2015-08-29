@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.twofortyfouram.locale.sdk.client.ui.util;
+package com.twofortyfouram.locale.sdk.client.internal;
 
 import android.content.Context;
 import android.content.Intent;

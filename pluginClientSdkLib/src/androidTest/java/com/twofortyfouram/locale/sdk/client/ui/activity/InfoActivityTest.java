@@ -15,7 +15,7 @@
 
 package com.twofortyfouram.locale.sdk.client.ui.activity;
 
-import com.twofortyfouram.locale.sdk.client.ui.util.HostPackageUtilTest.HostPackageManager;
+import com.twofortyfouram.locale.sdk.client.internal.HostPackageUtilTest.HostPackageManager;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;

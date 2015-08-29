@@ -25,7 +25,6 @@ import android.support.annotation.Nullable;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.suitebuilder.annotation.MediumTest;
-import android.test.suitebuilder.annotation.SmallTest;
 
 import com.twofortyfouram.assertion.Assertions;
 import com.twofortyfouram.assertion.BundleAssertions;
@@ -619,23 +618,6 @@ public final class PluginActivityImplTest extends
                 "Edit Situation"); //$NON-NLS-1$
 
         return i;
-    }
-
-    @SmallTest
-    public static void testIsLocaleIntent_condition() {
-        assertTrue(AbstractPluginActivity
-                .isLocalePluginIntent(getDefaultStartIntent(PluginType.CONDITION)));
-    }
-
-    @SmallTest
-    public static void testIsLocaleIntent_setting() {
-        assertTrue(AbstractPluginActivity
-                .isLocalePluginIntent(getDefaultStartIntent(PluginType.SETTING)));
-    }
-
-    @SmallTest
-    public static void testIsLocaleIntent_neither() {
-        assertFalse(AbstractPluginActivity.isLocalePluginIntent(new Intent()));
     }
 
 }

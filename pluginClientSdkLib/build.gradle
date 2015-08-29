@@ -53,8 +53,7 @@ android.libraryVariants.all { variant ->
         classpath = files(variant.javaCompile.classpath.files) + files("${androidHome}/platforms/${android.compileSdkVersion}/android.jar") + files("${androidHome}/extras/android/support/v4/android-support-v4.jar")
         options.linksOffline('http://developer.android.com/reference/', "${androidHome}/docs/reference")
         options.links('http://jcip.net.s3-website-us-east-1.amazonaws.com/annotations/doc/', 'http://twofortyfouram.github.io/android-annotation/', 'http://twofortyfouram.github.io/android-plugin-api-for-locale/')
-        exclude '**/HostPackageUtil.java'
-        exclude '**/UiResConstants.java'
+        exclude 'com/twofortyfouram/locale/sdk/client/internal/**'
     }
 }
 

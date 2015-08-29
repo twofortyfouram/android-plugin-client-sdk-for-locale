@@ -29,8 +29,6 @@ import com.twofortyfouram.log.Lumberjack;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import java.util.Locale;
-
 import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
@@ -72,7 +70,7 @@ public final class InfoActivity extends Activity {
         assertNotNull(myPackageName, "myPackageName"); //$NON-NLS-1$
 
         final String compatiblePackage
-                = com.twofortyfouram.locale.sdk.client.ui.util.HostPackageUtil
+                = com.twofortyfouram.locale.sdk.client.internal.HostPackageUtil
                 .getCompatiblePackage(manager, null);
         if (null != compatiblePackage) {
             final Intent i = manager.getLaunchIntentForPackage(compatiblePackage);

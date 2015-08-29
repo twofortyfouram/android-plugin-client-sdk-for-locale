@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.twofortyfouram.locale.sdk.client.ui.util;
+package com.twofortyfouram.locale.sdk.client.internal;
 
 import android.content.pm.PackageInfo;
 import android.support.annotation.NonNull;
@@ -21,6 +21,7 @@ import android.test.AndroidTestCase;
 import android.test.mock.MockPackageManager;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.twofortyfouram.locale.sdk.client.internal.HostPackageUtil;
 import com.twofortyfouram.test.assertion.MoarAsserts;
 
 import net.jcip.annotations.ThreadSafe;

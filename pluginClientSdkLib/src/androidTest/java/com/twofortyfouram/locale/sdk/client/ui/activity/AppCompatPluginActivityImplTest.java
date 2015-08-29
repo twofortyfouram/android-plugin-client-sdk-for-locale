@@ -622,21 +622,4 @@ public final class AppCompatPluginActivityImplTest extends
 
         return i;
     }
-
-    @SmallTest
-    public static void testIsLocaleIntent_condition() {
-        assertTrue(AbstractPluginActivity
-                .isLocalePluginIntent(getDefaultStartIntent(PluginType.CONDITION)));
-    }
-
-    @SmallTest
-    public static void testIsLocaleIntent_setting() {
-        assertTrue(AbstractPluginActivity
-                .isLocalePluginIntent(getDefaultStartIntent(PluginType.SETTING)));
-    }
-
-    @SmallTest
-    public static void testIsLocaleIntent_neither() {
-        assertFalse(AbstractPluginActivity.isLocalePluginIntent(new Intent()));
-    }
 }

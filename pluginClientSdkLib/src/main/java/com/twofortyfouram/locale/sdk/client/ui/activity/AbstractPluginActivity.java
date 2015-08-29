@@ -16,21 +16,13 @@
 package com.twofortyfouram.locale.sdk.client.ui.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.twofortyfouram.annotation.VisibleForTesting;
-import com.twofortyfouram.annotation.VisibleForTesting.Visibility;
-import com.twofortyfouram.assertion.BundleAssertions;
-import com.twofortyfouram.log.Lumberjack;
-import com.twofortyfouram.spackle.util.bundle.BundleComparer;
-import com.twofortyfouram.spackle.util.bundle.BundleScrubber;
+import com.twofortyfouram.locale.sdk.client.internal.PluginActivityDelegate;
 
 import net.jcip.annotations.NotThreadSafe;
-
-import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
  * <p>
@@ -73,7 +65,7 @@ import static com.twofortyfouram.assertion.Assertions.assertNotNull;
  * @see com.twofortyfouram.locale.api.Intent#ACTION_EDIT_SETTING ACTION_EDIT_SETTING
  */
 @NotThreadSafe
-public abstract class AbstractPluginActivity extends Activity {
+public abstract class AbstractPluginActivity extends Activity implements IPluginActivity {
 
     /**
      * Flag boolean that can be set prior to calling {@link #finish()} to control whether the
@@ -86,77 +78,26 @@ public abstract class AbstractPluginActivity extends Activity {
      */
     protected boolean mIsCancelled = false;
 
-    /**
-     * @param intent Intent to check.
-     * @return True if intent is a Locale plug-in edit Intent.
-     */
-    @VisibleForTesting(Visibility.PRIVATE)
-    /* package */ static boolean isLocalePluginIntent(@NonNull final Intent intent) {
-        assertNotNull(intent, "intent"); //$NON-NLS-1$
-
-        final String action = intent.getAction();
-
-        return com.twofortyfouram.locale.api.Intent.ACTION_EDIT_CONDITION.equals(action)
-                || com.twofortyfouram.locale.api.Intent.ACTION_EDIT_SETTING.equals(action);
-    }
+    @NonNull
+    private final PluginActivityDelegate<AbstractPluginActivity> mPluginActivityDelegate = new PluginActivityDelegate<>();
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (isLocalePluginIntent(getIntent())) {
-            BundleScrubber.scrub(getIntent());
-
-            final Bundle previousBundle = getPreviousBundle();
-            BundleScrubber.scrub(previousBundle);
-
-            Lumberjack
-                    .v("Creating Activity with Intent=%s, savedInstanceState=%s, EXTRA_BUNDLE=%s",
-                            getIntent(), savedInstanceState, previousBundle); //$NON-NLS-1$
-        }
+        mPluginActivityDelegate.onCreate(this, savedInstanceState);
     }
 
     @Override
     protected void onPostCreate(@Nullable final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        if (isLocalePluginIntent(getIntent())) {
-            if (null == savedInstanceState) {
-                final Bundle previousBundle = getPreviousBundle();
-                final String previousBlurb = getPreviousBlurb();
-                if (null != previousBundle && null != previousBlurb) {
-                    onPostCreateWithPreviousResult(previousBundle, previousBlurb);
-                }
-            }
-        }
+        mPluginActivityDelegate.onPostCreate(this, savedInstanceState);
     }
 
     @Override
     public void finish() {
-        if (isLocalePluginIntent(getIntent())) {
-            if (!mIsCancelled) {
-                final Bundle resultBundle = getResultBundle();
-
-                if (null != resultBundle) {
-                    BundleAssertions.assertSerializable(resultBundle);
-
-                    final String blurb = getResultBlurb(resultBundle);
-                    assertNotNull(blurb, "blurb"); //$NON-NLS-1$
-
-                    if (!BundleComparer.areBundlesEqual(resultBundle, getPreviousBundle())
-                            || !blurb.equals(getPreviousBlurb())) {
-                        final Intent resultIntent = new Intent();
-                        resultIntent.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE,
-                                resultBundle);
-                        resultIntent.putExtra(
-                                com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB,
-                                blurb);
-
-                        setResult(RESULT_OK, resultIntent);
-                    }
-                }
-            }
-        }
+        mPluginActivityDelegate.finish(this, mIsCancelled);
 
         /*
          * Super call must come after the Activity result is set. If it comes
@@ -173,16 +114,7 @@ public abstract class AbstractPluginActivity extends Activity {
      */
     @Nullable
     public final Bundle getPreviousBundle() {
-        final Bundle bundle = getIntent().getBundleExtra(
-                com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
-
-        if (null != bundle) {
-            if (isBundleValid(bundle)) {
-                return bundle;
-            }
-        }
-
-        return null;
+        return mPluginActivityDelegate.getPreviousBundle(this);
     }
 
     /**
@@ -193,54 +125,6 @@ public abstract class AbstractPluginActivity extends Activity {
      */
     @Nullable
     public final String getPreviousBlurb() {
-        final String blurb = getIntent().getStringExtra(
-                com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB);
-
-        return blurb;
+        return mPluginActivityDelegate.getPreviousBlurb(this);
     }
-
-    /**
-     * <p>Validates the Bundle, to ensure that a malicious application isn't attempting to pass
-     * an invalid Bundle.</p>
-     *
-     * @param bundle The plug-in's Bundle previously returned by the edit
-     *               Activity.  {@code bundle} should not be mutated by this method.
-     * @return true if {@code bundle} is valid for the plug-in.
-     */
-    public abstract boolean isBundleValid(@NonNull final Bundle bundle);
-
-    /**
-     * Plug-in Activity lifecycle callback to allow the Activity to restore
-     * state for editing a previously saved plug-in instance. This callback will
-     * occur during the onPostCreate() phase of the Activity lifecycle.
-     * <p>{@code bundle} will have been
-     * validated by {@link #isBundleValid(android.os.Bundle)} prior to this
-     * method being called.  If {@link #isBundleValid(android.os.Bundle)} returned false, then this
-     * method will not be called.  This helps ensure that plug-in Activity subclasses only have to
-     * worry about bundle validation once, in the {@link #isBundleValid(android.os.Bundle)}
-     * method.</p>
-     * <p>Note this callback only occurs the first time the Activity is created, so it will not be
-     * called
-     * when the Activity is recreated (e.g. {@code savedInstanceState != null}) such as after a
-     * configuration change like a screen rotation.</p>
-     *
-     * @param previousBundle Previous bundle that the Activity saved.
-     * @param previousBlurb  Previous blurb that the Activity saved
-     */
-    public abstract void onPostCreateWithPreviousResult(
-            @NonNull final Bundle previousBundle, @NonNull final String previousBlurb);
-
-    /**
-     * @return Bundle for the plug-in or {@code null} if a valid Bundle cannot
-     * be generated.
-     */
-    @Nullable
-    public abstract Bundle getResultBundle();
-
-    /**
-     * @param bundle Valid bundle for the component.
-     * @return Blurb for {@code bundle}.
-     */
-    @NonNull
-    public abstract String getResultBlurb(@NonNull final Bundle bundle);
 }

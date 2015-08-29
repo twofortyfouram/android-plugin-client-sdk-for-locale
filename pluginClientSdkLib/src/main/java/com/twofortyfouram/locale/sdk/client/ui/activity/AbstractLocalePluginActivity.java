@@ -27,7 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.twofortyfouram.locale.sdk.client.R;
-import com.twofortyfouram.locale.sdk.client.ui.util.BreadCrumber;
+import com.twofortyfouram.locale.sdk.client.internal.BreadCrumber;
+import com.twofortyfouram.locale.sdk.client.internal.PluginActivityDelegate;
 import com.twofortyfouram.log.Lumberjack;
 import com.twofortyfouram.spackle.util.AndroidSdkVersion;
 
@@ -52,7 +53,7 @@ public abstract class AbstractLocalePluginActivity extends AbstractPluginActivit
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (isLocalePluginIntent(getIntent())) {
+        if (PluginActivityDelegate.isLocalePluginIntent(getIntent())) {
             if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.LOLLIPOP)) {
                 // Do nothing; let the Activity label apply
             } else if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
@@ -68,17 +69,19 @@ public abstract class AbstractLocalePluginActivity extends AbstractPluginActivit
     public boolean onCreateOptionsMenu(final Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        if (isLocalePluginIntent(getIntent())) {
+        if (PluginActivityDelegate.isLocalePluginIntent(getIntent())) {
             getMenuInflater().inflate(R.menu.com_twofortyfouram_locale_sdk_client_default_menu, menu);
-
-            if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
-                setupActionBarApi11OrLater();
-            }
 
             if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.LOLLIPOP)) {
                 // Do nothing; let default action bar apply
-            } else if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
-                setupActionBarApi14OrLater();
+            } else {
+                if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.HONEYCOMB)) {
+                    setupActionBarApi11OrLater();
+                }
+
+                if (AndroidSdkVersion.isAtLeastSdk(Build.VERSION_CODES.ICE_CREAM_SANDWICH)) {
+                    setupActionBarApi14OrLater();
+                }
             }
         }
 
@@ -87,7 +90,7 @@ public abstract class AbstractLocalePluginActivity extends AbstractPluginActivit
 
     @Override
     public final boolean onMenuItemSelected(final int featureId, final MenuItem item) {
-        if (isLocalePluginIntent(getIntent())) {
+        if (PluginActivityDelegate.isLocalePluginIntent(getIntent())) {
             final int id = item.getItemId();
 
             if (android.R.id.home == id) {
