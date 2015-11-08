@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 
 import com.twofortyfouram.annotation.VisibleForTesting;
@@ -27,6 +28,9 @@ import com.twofortyfouram.annotation.VisibleForTesting.Visibility;
 import com.twofortyfouram.log.Lumberjack;
 import com.twofortyfouram.spackle.AndroidSdkVersion;
 import com.twofortyfouram.spackle.bundle.BundleScrubber;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * <p>Abstract superclass for a plug-in condition BroadcastReceiver implementation.</p>
@@ -48,7 +52,7 @@ import com.twofortyfouram.spackle.bundle.BundleScrubber;
  * <li>{@link #isAsync()} is called to determine whether the remaining work should be performed on
  * a
  * background thread.</li>
- * <li>{@link #getPluginConditionState(android.content.Context, android.os.Bundle)} is called to
+ * <li>{@link #getPluginConditionResult(android.content.Context, android.os.Bundle)} is called to
  * determine the plug-in's status, and the return value of this method is set as the receiver's
  * result code.</li>
  * </ol>
@@ -68,7 +72,10 @@ public abstract class AbstractPluginConditionReceiver extends AbstractAsyncRecei
      */
     @Override
     public final void onReceive(final Context context, final Intent intent) {
-        BundleScrubber.scrub(intent);
+        if (BundleScrubber.scrub(intent)) {
+            return;
+        }
+
         Lumberjack.v("Received %s", intent); //$NON-NLS-1$
 
         if (!isOrderedBroadcast()) {
@@ -99,7 +106,9 @@ public abstract class AbstractPluginConditionReceiver extends AbstractAsyncRecei
 
         final Bundle bundle = intent
                 .getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
-        BundleScrubber.scrub(bundle);
+        if (BundleScrubber.scrub(intent)) {
+            return;
+        }
 
         if (null == bundle) {
             Lumberjack.e("%s is missing",
@@ -125,35 +134,35 @@ public abstract class AbstractPluginConditionReceiver extends AbstractAsyncRecei
 
                 @Override
                 public int runAsync() {
-                    final int pluginState = getPluginConditionState(mContext, mBundle);
-                    assertState(pluginState);
-                    return pluginState;
+                    final int pluginResult = getPluginConditionResult(mContext, mBundle);
+                    assertResult(pluginResult);
+                    return pluginResult;
                 }
 
             };
 
             goAsyncWithCallback(callback);
         } else {
-            final int pluginState = getPluginConditionState(context, bundle);
-            assertState(pluginState);
+            final int pluginState = getPluginConditionResult(context, bundle);
+            assertResult(pluginState);
             setResultCode(pluginState);
         }
     }
 
     /**
-     * @param state One of the acceptable plug-in result codes.
-     * @throws AssertionError if {@code state} is not one of the three
+     * @param result One of the acceptable plug-in result codes.
+     * @throws AssertionError if {@code result} is not one of the three
      *                        acceptable values.
      */
     @VisibleForTesting(Visibility.PRIVATE)
-    /* package */ static void assertState(final int state) {
-        if (com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED != state
-                && com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED != state
-                && com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNKNOWN != state) {
+    /* package */ static void assertResult(final int result) {
+        if (com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED != result
+                && com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED != result
+                && com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNKNOWN != result) {
             throw new AssertionError(
                     Lumberjack
                             .formatMessage(
-                                    "state=%d is not one of [%d, %d, %d]", state, //$NON-NLS-1$
+                                    "result=%d is not one of [%d, %d, %d]", result, //$NON-NLS-1$
                                     com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED,
                                     com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED,
                                     com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNKNOWN)
@@ -179,7 +188,7 @@ public abstract class AbstractPluginConditionReceiver extends AbstractAsyncRecei
     /**
      * Configures the receiver whether it should process the Intent in a
      * background thread. Plug-ins should return true if their
-     * {@link #getPluginConditionState(Context, Bundle)} method performs any
+     * {@link #getPluginConditionResult(Context, Bundle)} method performs any
      * sort of disk IO (ContentProvider query, reading SharedPreferences, etc.).
      * or other work that may be slow.
      * <p>
@@ -218,7 +227,16 @@ public abstract class AbstractPluginConditionReceiver extends AbstractAsyncRecei
      * {@link com.twofortyfouram.locale.api.Intent#RESULT_CONDITION_UNKNOWN
      * RESULT_CONDITION_UNKNOWN}
      */
-    protected abstract int getPluginConditionState(@NonNull final Context context,
-            @NonNull final Bundle bundle);
+    @ConditionResult
+    protected abstract int getPluginConditionResult(@NonNull final Context context,
+                                                    @NonNull final Bundle bundle);
+
+    @IntDef({com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED, com.twofortyfouram
+            .locale.api.Intent.RESULT_CONDITION_UNKNOWN, com.twofortyfouram.locale.api.Intent
+            .RESULT_CONDITION_UNSATISFIED})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ConditionResult {
+
+    }
 
 }

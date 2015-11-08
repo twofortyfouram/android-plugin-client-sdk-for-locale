@@ -123,14 +123,14 @@ public final class AbstractPluginConditionReceiverTest extends AndroidTestCase {
     public static void testAssertState() {
 
         AbstractPluginConditionReceiver
-                .assertState(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNKNOWN);
+                .assertResult(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNKNOWN);
         AbstractPluginConditionReceiver
-                .assertState(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED);
+                .assertResult(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED);
         AbstractPluginConditionReceiver
-                .assertState(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED);
+                .assertResult(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED);
 
         try {
-            AbstractPluginConditionReceiver.assertState(Activity.RESULT_OK);
+            AbstractPluginConditionReceiver.assertResult(Activity.RESULT_OK);
             fail();
         } catch (final AssertionError e) {
             // Expected exception

@@ -38,8 +38,8 @@ public final class PluginConditionReceiver extends AbstractPluginConditionReceiv
     }
 
     @Override
-    protected int getPluginConditionState(@NonNull final Context context,
-            @NonNull final Bundle bundle) {
+    protected int getPluginConditionResult(@NonNull final Context context,
+                                           @NonNull final Bundle bundle) {
         return PluginBundleValues.getResultCode(bundle);
     }
 }

@@ -63,7 +63,9 @@ public abstract class AbstractPluginSettingReceiver extends AbstractAsyncReceive
      */
     @Override
     public final void onReceive(final Context context, final Intent intent) {
-        BundleScrubber.scrub(intent);
+        if (BundleScrubber.scrub(intent)) {
+            return;
+        }
         Lumberjack.v("Received %s", intent); //$NON-NLS-1$
 
         /*
@@ -96,7 +98,9 @@ public abstract class AbstractPluginSettingReceiver extends AbstractAsyncReceive
 
         final Bundle bundle = intent
                 .getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
-        BundleScrubber.scrub(bundle);
+        if (BundleScrubber.scrub(intent)) {
+            return;
+        }
 
         if (null == bundle) {
             Lumberjack.e("%s is missing",
