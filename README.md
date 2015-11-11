@@ -27,7 +27,7 @@ The build.gradle repositories section would look something like the following:
 And the dependencies section would look something like this:
 
     dependencies {
-        compile group:'com.twofortyfouram', name:'android-plugin-client-sdk-for-locale', version:'[3.0.0, 4.0['
+        compile group:'com.twofortyfouram', name:'android-plugin-client-sdk-for-locale', version:'[4.0.0, 5.0['
     }
 
 
@@ -114,3 +114,4 @@ At runtime the host launches the plug-in's Activity, the plug-in's Activity retu
 * 3.0.0
     * Remove AbstractLocalePluginActivity and AbstractLocaleFragmentPluginActivity.  These deprecated Activities implemented UI logic, while this SDK should only responsible for communicating with the host.
     * Rename AbstractPluginConditionReceiver.getPluginConditionState(Context, Bundle) to be more internally consistent.
+* 4.0.0: Remove strings and resources that were previously used by AbstractLocalePluginActivity and AbstractLocaleFragmentPluginActivity.

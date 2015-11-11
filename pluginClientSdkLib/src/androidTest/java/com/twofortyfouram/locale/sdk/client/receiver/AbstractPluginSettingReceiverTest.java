@@ -207,7 +207,9 @@ public final class AbstractPluginSettingReceiverTest extends AndroidTestCase {
         @Override
         public void onReceive(final Context context, final Intent intent) {
 
-            BundleScrubber.scrub(intent);
+            if (BundleScrubber.scrub(intent)) {
+                throw new AssertionError();
+            }
 
             Lumberjack.v("Received %s", intent); //$NON-NLS-1$
 
