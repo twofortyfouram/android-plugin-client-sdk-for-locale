@@ -91,7 +91,7 @@ public abstract class AbstractAppCompatPluginActivity extends AppCompatActivity 
     }
 
     @Override
-    protected void onPostCreate(@Nullable final Bundle savedInstanceState) {
+    public void onPostCreate(@Nullable final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
         mPluginActivityDelegate.onPostCreate(this, savedInstanceState);

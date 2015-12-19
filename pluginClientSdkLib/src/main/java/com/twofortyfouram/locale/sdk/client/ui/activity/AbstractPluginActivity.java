@@ -89,7 +89,7 @@ public abstract class AbstractPluginActivity extends Activity implements IPlugin
     }
 
     @Override
-    protected void onPostCreate(@Nullable final Bundle savedInstanceState) {
+    public void onPostCreate(@Nullable final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
         mPluginActivityDelegate.onPostCreate(this, savedInstanceState);
