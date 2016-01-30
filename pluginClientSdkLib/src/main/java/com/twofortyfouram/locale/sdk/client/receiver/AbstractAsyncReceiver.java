@@ -25,16 +25,18 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Pair;
 
+import com.twofortyfouram.spackle.AndroidSdkVersion;
 import com.twofortyfouram.spackle.ThreadUtil;
 import com.twofortyfouram.spackle.ThreadUtil.ThreadPriority;
 
 import net.jcip.annotations.ThreadSafe;
 
+import static com.twofortyfouram.assertion.Assertions.assertInRangeInclusive;
 import static com.twofortyfouram.assertion.Assertions.assertNotNull;
 
 /**
  * Simplifies asynchronous broadcast handling. Subclasses call
- * {@link #goAsyncWithCallback(AsyncCallback)}, and the abstract class takes
+ * {@link #goAsyncWithCallback(AsyncCallback, boolean)}, and the abstract class takes
  * care of executing the callback on a background thread.
  */
 @ThreadSafe
@@ -43,9 +45,13 @@ import static com.twofortyfouram.assertion.Assertions.assertNotNull;
     /*
      * This method is package visible rather than protected so that it will be
      * obfuscated by ProGuard.
+     *
+     * @param callback Callback to execute on a background thread.
+     * @param isOrdered Indicates whether an ordered broadcast is being processed.
      */
     @TargetApi(VERSION_CODES.HONEYCOMB)
-    /* package */ final void goAsyncWithCallback(@NonNull final AsyncCallback callback) {
+    /* package */ final void goAsyncWithCallback(@NonNull final AsyncCallback callback,
+            final boolean isOrdered) {
         assertNotNull(callback, "callback"); //$NON-NLS-1$
 
         final PendingResult pendingResult = goAsync();
@@ -59,13 +65,25 @@ import static com.twofortyfouram.assertion.Assertions.assertNotNull;
                 ThreadPriority.BACKGROUND);
         final Handler handler = new Handler(thread.getLooper(), handlerCallback);
 
-        handler.sendMessage(handler.obtainMessage(AsyncHandlerCallback.MESSAGE_HANDLE_CALLBACK,
-                new Pair<PendingResult, AsyncCallback>(pendingResult, callback)));
+        final Object obj = new Pair<PendingResult, AsyncCallback>(pendingResult, callback);
+        final int isOrderedInt = isOrdered ? 1 : 0;
+        final Message msg = handler
+                .obtainMessage(AsyncHandlerCallback.MESSAGE_HANDLE_CALLBACK, isOrderedInt, 0, obj);
+
+        final boolean isMessageSent = handler.sendMessage(msg);
+        if (!isMessageSent) {
+            throw new AssertionError();
+        }
     }
 
     @TargetApi(VERSION_CODES.HONEYCOMB)
     private static final class AsyncHandlerCallback implements Handler.Callback {
 
+        /**
+         * Message MUST contain a {@code Pair<PendingResult, AsyncCallback>} as the {@code msg.obj}
+         * and a boolean encoded in the {@code msg.arg1} to indicate whether the broadcast was
+         * ordered.
+         */
         public static final int MESSAGE_HANDLE_CALLBACK = 0;
 
         @Override
@@ -74,30 +92,49 @@ import static com.twofortyfouram.assertion.Assertions.assertNotNull;
             switch (msg.what) {
                 case MESSAGE_HANDLE_CALLBACK: {
                     assertNotNull(msg.obj, "msg.obj"); //$NON-NLS-1$
+                    assertInRangeInclusive(msg.arg1, 0, 1, "msg.arg1");  //$NON-NLS-1$
 
                     final Pair<PendingResult, AsyncCallback> pair = castObj(msg.obj);
+                    final boolean isOrdered = 0 != msg.arg1;
 
                     final PendingResult pendingResult = pair.first;
                     final AsyncCallback asyncCallback = pair.second;
 
                     try {
-                        pendingResult.setResultCode(asyncCallback.runAsync());
+                        final int resultCode = asyncCallback.runAsync();
+
+                        if (isOrdered) {
+                            pendingResult.setResultCode(resultCode);
+                        }
                     } finally {
                         pendingResult.finish();
                     }
 
-                    Looper.myLooper().quit();
+                    quit();
 
                     break;
                 }
             }
-            return false;
+            return true;
         }
 
         @NonNull
         @SuppressWarnings("unchecked")
         private static Pair<PendingResult, AsyncCallback> castObj(@NonNull final Object o) {
             return (Pair<PendingResult, AsyncCallback>) o;
+        }
+
+        private static void quit() {
+            if (AndroidSdkVersion.isAtLeastSdk(VERSION_CODES.JELLY_BEAN_MR2)) {
+                quitJellybeanMr2();
+            } else {
+                Looper.myLooper().quit();
+            }
+        }
+
+        @TargetApi(VERSION_CODES.JELLY_BEAN_MR2)
+        private static void quitJellybeanMr2() {
+            Looper.myLooper().quitSafely();
         }
     }
 

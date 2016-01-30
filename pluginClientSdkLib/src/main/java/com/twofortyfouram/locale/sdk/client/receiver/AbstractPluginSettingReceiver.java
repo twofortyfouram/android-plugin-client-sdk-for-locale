@@ -131,7 +131,7 @@ public abstract class AbstractPluginSettingReceiver extends AbstractAsyncReceive
 
             };
 
-            goAsyncWithCallback(callback);
+            goAsyncWithCallback(callback, isOrderedBroadcast());
         } else {
             firePluginSetting(context, bundle);
         }

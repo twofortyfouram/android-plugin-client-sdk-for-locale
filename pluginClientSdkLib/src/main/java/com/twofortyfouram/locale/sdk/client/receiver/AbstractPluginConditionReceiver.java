@@ -141,7 +141,7 @@ public abstract class AbstractPluginConditionReceiver extends AbstractAsyncRecei
 
             };
 
-            goAsyncWithCallback(callback);
+            goAsyncWithCallback(callback, isOrderedBroadcast());
         } else {
             final int pluginState = getPluginConditionResult(context, bundle);
             assertResult(pluginState);
