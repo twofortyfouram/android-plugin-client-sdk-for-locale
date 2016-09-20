@@ -11,7 +11,7 @@ JavaDocs for the library are published [here](http://twofortyfouram.github.io/an
 
 
 # Compatibility
-The library is compatible and optimized for Android API Level 8 and above.
+The library is compatible and optimized for Android API Level 9 and above.
 
 
 # Download
