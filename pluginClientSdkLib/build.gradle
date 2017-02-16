@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
 apply plugin: 'findbugs'
+apply plugin: 'maven'
 
 dependencies {
     // support-v4 and appcompat-v7 are optional for backwards compatibility
@@ -17,8 +17,9 @@ dependencies {
     compile group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:"${TWOFORTYFOURAM_PLUGIN_API_VERSION_MATCHER}"
     compile group:'com.twofortyfouram', name:'android-spackle', version:"${TWOFORTYFOURAM_SPACKLE_VERSION_MATCHER}"
 
+    androidTestCompile group:'com.android.support.test.espresso', name:'espresso-core', version:"${ESPRESSO_CORE_VERSION_MATCHER}"
+    androidTestCompile group:'com.android.support.test.espresso', name:'espresso-intents', version:"${ESPRESSO_INTENTS_VERSION_MATCHER}"
     androidTestCompile group:'com.twofortyfouram', name:'android-test', version:"${TWOFORTYFOURAM_TEST_VERSION_MATCHER}"
-    androidTestCompile group:'com.android.support.test', name:'testing-support-lib', version:"${ANDROID_SUPPORT_TEST_VERSION_MATCHER}"
 }
 
 android {
@@ -41,6 +42,8 @@ android {
             testCoverageEnabled Boolean.parseBoolean(IS_COVERAGE_ENABLED)
         }
         release {
+            // Obfuscation is enabled to cleanup classes declared public
+            // but which are considered internal APIs
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt'
         }
@@ -52,9 +55,12 @@ android.libraryVariants.all { variant ->
         description "Generates Javadoc for $variant.name."
         def androidHome = System.getenv('ANDROID_HOME')
         source = variant.javaCompile.source
-        classpath = files(variant.javaCompile.classpath.files) + files("${androidHome}/platforms/${android.compileSdkVersion}/android.jar") + files("${androidHome}/extras/android/support/v4/android-support-v4.jar")
-        options.linksOffline('http://developer.android.com/reference/', "${androidHome}/docs/reference")
-        options.links('http://jcip.net.s3-website-us-east-1.amazonaws.com/annotations/doc/', 'http://twofortyfouram.github.io/android-annotation/', 'http://twofortyfouram.github.io/android-plugin-api-for-locale/')
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        classpath += variant.javaCompile.classpath
+        classpath += variant.javaCompile.outputs.files
+        options.linksOffline('https://developer.android.com/reference/', "${androidHome}/docs/reference")
+        options.links('http://jcip.net.s3-website-us-east-1.amazonaws.com/annotations/doc/', 'https://twofortyfouram.github.io/android-annotation/', 'https://twofortyfouram.github.io/android-plugin-api-for-locale/')
+        exclude '**/R.java'
         exclude 'com/twofortyfouram/locale/sdk/client/internal/**'
     }
 }
@@ -125,7 +131,7 @@ android.libraryVariants.all { variant ->
     project.artifacts.add('archives', tasks["${variant.name}SourceJar"]);
 }
 
-task findbugs(type: FindBugs) {
+task findbugs(type: FindBugs, dependsOn: ':pluginClientSdkLib:compileReleaseSources') {
     ignoreFailures = true
     classes = fileTree('build/intermediates/classes/release/')
     source = fileTree('src/main/java/')
