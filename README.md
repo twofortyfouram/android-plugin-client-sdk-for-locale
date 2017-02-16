@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/twofortyfouram/android-plugin-client-sdk-for-locale.png?branch=master)](https://travis-ci.org/twofortyfouram/android-plugin-client-sdk-for-locale)
+[![CircleCI](https://circleci.com/gh/twofortyfouram/android-plugin-client-sdk-for-locale.svg?style=svg)](https://circleci.com/gh/twofortyfouram/android-plugin-client-sdk-for-locale)
 
 # Overview
 [Locale](https://play.google.com/store/apps/details?id=com.twofortyfouram.locale) allows developers to create plug-in conditions and settings.  The android-plugin-client-sdk-for-locale implements a set of classes to simplify building a plug-in.  This SDK is the middle layer of the Locale Developer Platform.
