@@ -1,4 +1,9 @@
-<manifest package="com.twofortyfouram.locale.sdk.client">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.twofortyfouram.locale.sdk.client">
+
+    <!-- Ignore appcompat compatibility requirements. -->
+    <uses-sdk tools:overrideLibrary="android.support.v4,android.support.v7.appcompat,android.support.graphics.drawable,android.support.mediacompat,android.support.fragment,android.support.fragment,android.support.coreui,android.support.coreutils,android.support.compat"/>
 
     <application />
 
