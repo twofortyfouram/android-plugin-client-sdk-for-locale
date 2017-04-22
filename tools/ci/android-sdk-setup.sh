@@ -12,7 +12,7 @@
 # 3. flag path, e.g. ~/flags/android-sdk-setup
 # 4. android sdk components, as used by `sdkmanager`.  e.g. "platforms;android-25" "build-tools;25.0.2" "platform-tools" "docs" "extras;android;m2repository"
 
-set +e
+set -e
 
 android_sdk_installation_dir="$1"
 android_tools_version="$2"

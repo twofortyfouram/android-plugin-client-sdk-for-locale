@@ -3,16 +3,10 @@ pluginClientSdkLib:
   test: pluginClientSdkLib/build/outputs/apk/android-plugin-client-sdk-for-locale-debug-androidTest.apk
   timeout: 10m
   results-history-name: pluginClientSdkLib
-  include: [test-butler-apk,devices,supported-versions,coverage-environment-variables]
+  include: [test-butler-apk,coverage-environment-variables]
 
 test-butler-apk:
   app: tools/test-butler-app-1.2.0.apk
-
-devices:
-  device-ids: [Nexus4,NexusLowRes]
-
-supported-versions:
-  os-version-ids: [19,25]
 
 coverage-environment-variables:
   environment-variables:

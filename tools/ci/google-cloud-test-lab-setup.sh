@@ -13,7 +13,7 @@
 # usage:
 # google-cloud-test-lab-setup.sh ~/gcloud 143.0.1 ~/flags/gcloud-setup <service_key_base64> <project>
 
-set +e
+set -e
 
 gcloud_installation_dir="$1"
 gcloud_version="$2"
