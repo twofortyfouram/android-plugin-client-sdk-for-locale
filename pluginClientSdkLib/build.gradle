@@ -7,11 +7,11 @@ dependencies {
     // This should be 'provided' scope, however there is a bug with the Android Gradle
     // plugin so instead the dependency is filtered out from the POM
     // https://code.google.com/p/android/issues/detail?id=68316
-    compile group:'com.android.support', name:'appcompat-v7', version:"${ANDROID_APP_COMPAT_V7_VERSION_MATCHER}"
-    compile group:'com.android.support', name:'support-v4', version:"${ANDROID_SUPPORT_V4_VERSION_MATCHER}"
+    compile group:'com.android.support', name:'appcompat-v7', version:"${ANDROID_SUPPORT_VERSION_MATCHER}"
+    compile group:'com.android.support', name:'support-v4', version:"${ANDROID_SUPPORT_VERSION_MATCHER}"
 
     compile group:'net.jcip', name:'jcip-annotations', version:"${JCIP_ANNOTATION_VERSION_MATCHER}"
-    compile group:'com.android.support', name:'support-annotations', version:"${ANDROID_SUPPORT_ANNOTATION_VERSION_MATCHER}"
+    compile group:'com.android.support', name:'support-annotations', version:"${ANDROID_SUPPORT_VERSION_MATCHER}"
     compile group:'com.twofortyfouram', name:'android-annotation', version:"${TWOFORTYFOURAM_ANNOTATION_VERSION_MATCHER}"
     compile group:'com.twofortyfouram', name:'android-assertion', version:"${TWOFORTYFOURAM_ASSERTION_VERSION_MATCHER}"
     compile group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:"${TWOFORTYFOURAM_PLUGIN_API_VERSION_MATCHER}"
