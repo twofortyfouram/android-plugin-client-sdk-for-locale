@@ -14,8 +14,6 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <integer name="com_twofortyfouram_locale_sdk_client_maximum_blurb_length" tools:ignore="UnusedResources">
-        60
-    </integer>
+    <integer name="com_twofortyfouram_locale_sdk_client_maximum_blurb_length" tools:ignore="UnusedResources">60</integer>
 
 </resources>
