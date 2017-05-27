@@ -15,7 +15,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- The maximum blurb length in characters.  This value is based on Latin characters. -->
-    <integer name="com_twofortyfouram_locale_sdk_client_maximum_blurb_length" tools:ignore="UnusedResources">50
-    </integer>
+    <integer name="com_twofortyfouram_locale_sdk_client_maximum_blurb_length" tools:ignore="UnusedResources">50</integer>
 
 </resources>
