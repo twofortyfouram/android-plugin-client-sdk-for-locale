@@ -27,7 +27,7 @@ The build.gradle repositories section would look something like the following:
 And the dependencies section would look something like this:
 
     dependencies {
-        compile group:'com.twofortyfouram', name:'android-plugin-client-sdk-for-locale', version:'[4.0.2, 5.0['
+        compile group:'com.twofortyfouram', name:'android-plugin-client-sdk-for-locale', version:'[4.0.3, 5.0['
     }
 
 
@@ -117,3 +117,4 @@ At runtime the host launches the plug-in's Activity, the plug-in's Activity retu
 * 4.0.0: Remove strings and resources that were previously used by AbstractLocalePluginActivity and AbstractLocaleFragmentPluginActivity.
 * 4.0.1: Fix visibility of Activity onPostCreate().  Thanks @ddykhoff for reporting this issue!
 * 4.0.2: Fix async plug-in settings.  Thanks @giech for reporting this issue!
+* 4.0.3: Fix compatibility with AAPT2 in Android Gradle Plugin 3.0.0-alpha2.
