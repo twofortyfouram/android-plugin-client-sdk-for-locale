@@ -1,4 +1,5 @@
-[![CircleCI](https://circleci.com/gh/twofortyfouram/android-plugin-client-sdk-for-locale.svg?style=svg)](https://circleci.com/gh/twofortyfouram/android-plugin-client-sdk-for-locale)
+# Archived
+This repository has been archived in favor of a new single repository located [here](https://github.com/twofortyfouram/android-monorepo).
 
 # Overview
 [Locale](https://play.google.com/store/apps/details?id=com.twofortyfouram.locale) allows developers to create plug-in conditions and settings.  The android-plugin-client-sdk-for-locale implements a set of classes to simplify building a plug-in.  This SDK is the middle layer of the Locale Developer Platform.
